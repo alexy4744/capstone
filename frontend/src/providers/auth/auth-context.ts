@@ -12,6 +12,7 @@ export type AuthContext = {
   forgotPassword: (email: string) => Promise<void>;
   login: (email: string, password: string) => Promise<string | void>;
   logout: () => Promise<void>;
+  register: (email: string, password: string) => Promise<string | void>;
   resetPassword: (code: string, newPassword: string) => Promise<string | void>;
 };
 
@@ -21,6 +22,7 @@ export const AuthContext = createContext<AuthContext>({
   forgotPassword: () => Promise.reject(),
   login: () => Promise.reject(),
   logout: () => Promise.reject(),
+  register: () => Promise.reject(),
   resetPassword: () => Promise.reject(),
 });
 

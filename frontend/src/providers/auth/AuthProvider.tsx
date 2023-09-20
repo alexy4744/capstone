@@ -3,6 +3,7 @@ import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import {
   EmailAuthProvider,
   confirmPasswordReset,
+  createUserWithEmailAndPassword,
   reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -78,6 +79,26 @@ export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) =
     await auth.signOut();
   };
 
+  const register = async (email: string, password: string) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error: any) {
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          throw new AuthError(error.code, "Email address is already in use.");
+        case "auth/invalid-email":
+          throw new AuthError(error.code, "Email address is invalid.");
+        case "auth/weak-password":
+          throw new AuthError(
+            error.code,
+            "Your password is too weak. Passwords must be at least 6 characters long."
+          );
+        default:
+          throw error;
+      }
+    }
+  };
+
   const resetPassword = async (code: string, newPassword: string) => {
     try {
       await verifyPasswordResetCode(auth, code);
@@ -127,6 +148,7 @@ export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) =
         forgotPassword,
         login,
         logout,
+        register,
         resetPassword,
       }}
     />
