@@ -59,6 +59,7 @@ export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) =
     } catch (error: any) {
       switch (error.code) {
         case "auth/invalid-email":
+        case "auth/invalid-login-credentials":
         case "auth/wrong-password":
         case "auth/user-not-found":
           throw new AuthError(error.code, "Invalid email or password.");
@@ -111,7 +112,7 @@ export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) =
         }
       );
 
-      setReady(user !== null);
+      setReady(true);
     });
 
     return unsubscribe;
