@@ -17,9 +17,19 @@ import { useFirebase } from "../firebase/firebase-context";
 import { AuthError } from "./auth-error";
 
 type AuthProviderProps = PropsWithChildren<{
+  /**
+   * The fallback to render while the auth provider is initializing.
+   */
   loadingFallback?: ReactNode;
 }>;
 
+/**
+ * Creates an auth provider. This provider should be used at the root of your application. It will
+ * provide the current user to the rest of your application as well as the methods to login, logout,
+ * register, and change the current user's password.
+ *
+ * @returns An auth provider that you can use to wrap your application.
+ */
 export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) => {
   const { auth } = useFirebase();
 

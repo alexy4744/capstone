@@ -14,6 +14,12 @@ export type FirebaseContext = {
 
 export const FirebaseContext = createContext<FirebaseContext | null>(null);
 
+/**
+ * A hook to access the Firebase context, which contains the Firebase app, auth,
+ * firestore, and functions instances.
+ * @returns The Firebase context
+ * @throws If the Firebase context is not available
+ */
 export const useFirebase = () => {
   const firebase = useContext(FirebaseContext);
 

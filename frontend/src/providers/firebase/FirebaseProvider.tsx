@@ -8,6 +8,15 @@ import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 import { FirebaseContext } from "./firebase-context";
 
+/**
+ * Creates a Firebase provider. This provider should be used at the root of your application. It
+ * will provide the Firebase app instance, as well as the auth, firestore, and functions instances
+ * to the rest of your application. It will also connect to the Firebase emulators if they are
+ * configured in your environment.
+ *
+ * @param app The Firebase app instance.
+ * @returns A Firebase provider that you can use to wrap your application.
+ */
 export const createFirebaseProvider = (app: FirebaseApp) => {
   const auth = getAuth(app);
   const firestore = getFirestore(app);
@@ -15,7 +24,7 @@ export const createFirebaseProvider = (app: FirebaseApp) => {
 
   if (import.meta.env.VITE_FIREBASE_AUTH_EMULATOR_HOST) {
     connectAuthEmulator(auth, import.meta.env.VITE_FIREBASE_AUTH_EMULATOR_HOST, {
-      disableWarnings: true
+      disableWarnings: true,
     });
   }
 
