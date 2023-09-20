@@ -27,3 +27,13 @@ export const AuthContext = createContext<AuthContext>({
 });
 
 export const useAuth = () => useContext(AuthContext);
+
+export const useCurrentUser = () => {
+  const { currentUser } = useAuth();
+
+  if (!currentUser) {
+    throw new Error("No current user found, did you forget to use AuthProvider?");
+  }
+
+  return currentUser;
+};
