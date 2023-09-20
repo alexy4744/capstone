@@ -42,7 +42,8 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => {
             },
           })}
         />
-        <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+
+        {errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
       </FormControl>
 
       <FormControl isInvalid={!!errors.password}>
@@ -56,7 +57,8 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => {
             required: "Password is required",
           })}
         />
-        <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+
+        {errors.password && <FormErrorMessage>{errors.password.message}</FormErrorMessage>}
       </FormControl>
 
       <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">

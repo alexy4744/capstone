@@ -43,7 +43,8 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
             },
           })}
         />
-        <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+
+        {errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
       </FormControl>
 
       <FormControl isInvalid={!!errors.password}>
@@ -61,7 +62,8 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
             },
           })}
         />
-        <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+
+        {errors.password && <FormErrorMessage>{errors.password.message}</FormErrorMessage>}
       </FormControl>
 
       <FormControl isInvalid={!!errors.confirmPassword}>
@@ -82,9 +84,10 @@ export const RegisterForm = ({ onRegister }: RegisterFormProps) => {
             },
           })}
         />
-        <FormErrorMessage>
-          {errors.confirmPassword && errors.confirmPassword.message}
-        </FormErrorMessage>
+
+        {errors.confirmPassword && (
+          <FormErrorMessage>{errors.confirmPassword.message}</FormErrorMessage>
+        )}
       </FormControl>
 
       <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
