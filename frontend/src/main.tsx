@@ -7,11 +7,13 @@ import App from "./App.tsx";
 
 import "./index.css";
 
+import theme from "./theme/theme.tsx";
+
 const root = document.getElementById("root")!;
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <App />
     </ChakraProvider>
   </React.StrictMode>
