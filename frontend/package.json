@@ -13,10 +13,17 @@
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "chart.js": "^4.4.0",
+    "firebase": "^10.4.0",
     "framer-motion": "^10.16.4",
+    "konva": "^9.2.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "react-icons": "^4.11.0"
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.46.1",
+    "react-konva": "^18.2.10",
+    "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
