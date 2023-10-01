@@ -14,3 +14,12 @@ export class AuthError extends Error {
     this.code = code;
   }
 }
+
+/**
+ * Type guard to check if an error is an AuthError
+ * @param error The error to check
+ * @returns True if the error is an AuthError
+ */
+export const isAuthError = (error: any): error is AuthError => {
+  return error instanceof AuthError;
+};
