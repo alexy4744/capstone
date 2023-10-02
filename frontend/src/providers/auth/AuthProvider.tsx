@@ -8,6 +8,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updatePassword,
+  updateProfile,
   verifyPasswordResetCode,
 } from "firebase/auth";
 
@@ -89,9 +90,13 @@ export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) =
     await auth.signOut();
   };
 
-  const register = async (email: string, password: string) => {
+  const register = async (displayName: string, email: string, password: string) => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+      await updateProfile(user, {
+        displayName,
+      });
     } catch (error: any) {
       switch (error.code) {
         case "auth/email-already-in-use":

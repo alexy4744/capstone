@@ -10,8 +10,10 @@ export const Register = () => {
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleRegister = (email: string, password: string) => {
-    register(email, password)
+  const handleRegister = (firstName: string, lastName: string, email: string, password: string) => {
+    const displayName = `${firstName.trim()} ${lastName.trim()}`;
+
+    register(displayName, email, password)
       .then(() => redirect("/"))
       .catch((error) => {
         if (error instanceof AuthError) {
