@@ -65,12 +65,13 @@ export type AuthContext = {
 
   /**
    * Register a new user with the given email and password.
+   * @param displayName The display name of the uesr
    * @param email The email address to register with
    * @param password The password to register with
    * @returns A promise that resolves if the registration was successful, or rejects
    * with an error message if the registration failed.
    */
-  register: (email: string, password: string) => Promise<void>;
+  register: (displayName: string, email: string, password: string) => Promise<void>;
 
   /**
    * Reset the user's password with the given code and new password.
