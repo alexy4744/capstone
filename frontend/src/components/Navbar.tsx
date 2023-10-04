@@ -3,7 +3,6 @@ import {
     Flex,
     Avatar,
     HStack,
-    Text,
     IconButton,
     Button,
     Menu,
@@ -14,12 +13,28 @@ import {
     useDisclosure,
     Stack,
 } from "@chakra-ui/react";
+import { redirect } from "react-router-dom";
+import { useAuth, useCurrentUser } from "../providers";
 import { MdClose } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TbPencilSearch } from "react-icons/tb";
 
 const Navbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const { currentUser, logout } = useAuth();
+
+    const handleLogout = () => {
+        if (!currentUser) {
+            redirect("/");
+        } else {
+            logout()
+                .then(() => redirect("/"))
+                .catch((error) => {
+                    console.log("logout error: ", error)
+                })
+        }
+    }
 
     return (
         <Box w="100vw" px="5" bg="white">
@@ -66,7 +81,7 @@ const Navbar = () => {
                             <MenuItem>Link 1</MenuItem>
                             <MenuItem>Link 2</MenuItem>
                             <MenuDivider />
-                            <MenuItem>Link 3</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

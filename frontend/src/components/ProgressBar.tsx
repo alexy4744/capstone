@@ -18,7 +18,7 @@ import { SlCalender } from "react-icons/sl";
 
 const ProgressBar = ({ initalDate }: { initalDate: Date }) => {
     const testDate = new Date()
-    testDate.setFullYear(2023, 10, 25)
+    testDate.setFullYear(2023, 10, 30)
 
     const [timeLeftInterval, setTimeLeftInterval] = useState<String[]>([]);
     const [timeLeft, setTimeLeft] = useState<String>("");

@@ -4,6 +4,7 @@ import { RequireAuth } from "./guards/RequireAuth";
 import { RequireNoAuth } from "./guards/RequireNoAuth";
 
 import { ForgotPassword, Login, Register } from "../pages/auth";
+import HomePage from "../pages/Home";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +29,12 @@ export const router = createBrowserRouter([
       },
       {
         element: <RequireAuth />,
-        children: [],
+        children: [
+          {
+            path: "",
+            element: <HomePage />
+          }
+        ],
       },
     ],
   },
