@@ -1,4 +1,4 @@
-import { FormErrorMessage, FormLabel, FormControl, Input, Button } from "@chakra-ui/react";
+import { Button, FormErrorMessage, FormLabel, FormControl, Input, Stack } from "@chakra-ui/react";
 
 import { useForm } from "react-hook-form";
 
@@ -21,33 +21,35 @@ export const ForgotPasswordForm = ({ onForgotPassword }: ForgotPasswordFormProps
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
-      <FormControl isInvalid={!!errors.email}>
-        <FormLabel htmlFor="email">Email</FormLabel>
+      <Stack spacing={4}>
+        <FormControl isInvalid={!!errors.email}>
+          <FormLabel htmlFor="email">Email</FormLabel>
 
-        <Input
-          id="email"
-          type="email"
-          placeholder="Email Address"
-          {...register("email", {
-            required: "Email address is required",
-            validate: (value) => {
-              const pattern = /\S+@\S+\.\S+/;
+          <Input
+            id="email"
+            type="email"
+            placeholder="Email Address"
+            {...register("email", {
+              required: "Email address is required",
+              validate: (value) => {
+                const pattern = /\S+@\S+\.\S+/;
 
-              if (!pattern.test(value)) {
-                return "Email address is invalid";
-              }
+                if (!pattern.test(value)) {
+                  return "Email address is invalid";
+                }
 
-              return true;
-            },
-          })}
-        />
+                return true;
+              },
+            })}
+          />
 
-        {errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
-      </FormControl>
+          {errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
+        </FormControl>
 
-      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
-        Submit
-      </Button>
+        <Button colorScheme="teal" isLoading={isSubmitting} type="submit">
+          Submit
+        </Button>
+      </Stack>
     </form>
   );
 };
