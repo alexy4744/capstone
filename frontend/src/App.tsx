@@ -7,6 +7,7 @@ import { AuthProvider, createFirebaseProvider } from "./providers";
 
 import { router } from "./router";
 
+import theme from "./theme/theme.tsx";
 import "./App.css";
 
 const firebaseApp = initializeApp({
@@ -23,7 +24,7 @@ export const App = () => {
   const FirebaseProvider = createFirebaseProvider(firebaseApp);
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <FirebaseProvider>
         <AuthProvider>
           <RouterProvider router={router} />
