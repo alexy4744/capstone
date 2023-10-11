@@ -73,7 +73,7 @@ const ProgressBar = ({ initalDate }: { initalDate: Date }) => {
                     <Text>{`Test Date: ${testDate.getMonth()}/${testDate.getDate()}/${testDate.getFullYear()}`}</Text>
                 )}
             </Flex>
-            <Flex position="relative" justifyContent="space-between" mx="20" py="4">
+            <Flex position="relative" justifyContent="space-between" mx={["0", "0", "20", "20"]} py="4">
                 {invalidDate ? (
                     <Box>
                         <Heading>Invalid Test Date!</Heading>
@@ -100,7 +100,7 @@ const ProgressBar = ({ initalDate }: { initalDate: Date }) => {
                         {timeLeftInterval.map((step, index) => (
                             <Flex flexDirection="column" justifyContent="center">
                                 <Step key={index} >
-                                    <StepIndicator bg="white">
+                                    <StepIndicator bg="white" >
                                         <StepStatus complete={<StepIcon />} />
                                     </StepIndicator>
                                     <StepSeparator />

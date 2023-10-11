@@ -1,9 +1,9 @@
 import { Chart as ChartJS, ArcElement } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement);
 
-type PieChartProps = {
+export type PieChartProps = {
   slices: {
     color: string;
     label: string;
@@ -13,7 +13,7 @@ type PieChartProps = {
 
 export const PieChart = ({ slices }: PieChartProps) => {
   return (
-    <Pie
+    <Doughnut
       data={{
         labels: slices.map(({ label }) => label),
         datasets: [
