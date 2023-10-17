@@ -7,9 +7,6 @@ from django.contrib.auth.models import User
 from .serializers import UserSerializer
 
 # Create your views here.
-def sayHi(request):
-    return HttpResponse("Hello")
-
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serialzier_class = UserSerializer
