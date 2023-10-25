@@ -26,8 +26,6 @@ type TopicModalProps = {
     onClick: Function
 }
 
-const topicList: string[] = ["random", "algebra", "geometery", "trig", "math", "things", "stuff"];
-
 const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     function handleClose(t: string) {
@@ -53,7 +51,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                     <ModalCloseButton />
                     <ModalBody>
                         <Container>
-                            {type != "Topic" ? (
+                            {type != "Topic" && (
                                 <SimpleGrid spacing="20px">
                                     <Button onClick={() => {
                                         handleClose("Calculator Allowed");
@@ -66,16 +64,16 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                                         Calculator Not Allowed
                                     </Button>
                                 </SimpleGrid>
-                            ) : <></>}
-                            {type === "Difficulty" ? (
+                            )}
+                            {type === "Difficulty" && (
                                 <Box position='relative' padding='10'>
                                     <Divider />
                                     <AbsoluteCenter bg='white' px='4'>
                                         Topics
                                     </AbsoluteCenter>
                                 </Box>
-                            ) : <></>}
-                            {type === "Difficulty" || type === "Topic" ? (
+                            )}
+                            {(type === "Difficulty" || type === "Topic") && (
                                 <>
                                     {/* <SimpleGrid minChildWidth="80px" spacing="20px">
                                         {topicList.map((t) => (
@@ -92,7 +90,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                                     </SimpleGrid> */}
                                     <TopicSelector onClick={handleClose} />
                                 </>
-                            ) : <></>}
+                            )}
                         </Container>
                     </ModalBody>
 

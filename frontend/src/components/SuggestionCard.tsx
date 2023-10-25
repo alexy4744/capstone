@@ -53,9 +53,9 @@ const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
                 <Flex flexDirection="column" gap="4">
                     <Heading fontSize="xl" fontWeight="semibold">{cardType?.title}</Heading>
                     <Text px="2">{cardType?.description}</Text>
-                    {cardType?.type === "Difficulty" ? (
+                    {cardType?.type === "Difficulty" && (
                         <DifficultySelector chosenDifficulty={chosenDifficulty} onClick={setChosenDifficulty} />
-                    ) : <></>}
+                    )}
                     <Text fontWeight="semibold">{cardType?.type === "Recommended" ? "Section" : "For"}</Text>
                     <Flex justifyContent="center">
                         <TopicModal type={cardType?.type ? cardType.type : "Difficulty"} topic={topic} onClick={setTopic} />

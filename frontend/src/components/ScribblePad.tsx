@@ -11,6 +11,7 @@ type Stroke = {
 };
 
 type ScribblePadProps = {
+  enabled?: boolean,
   backgroundColor?: string;
   height?: number;
   penColor?: string;
@@ -26,6 +27,7 @@ export const ScribblePad = ({
   strokeWidth = 5,
   tool = "pen",
   width = window.innerWidth,
+  enabled = true,
 }: ScribblePadProps) => {
   const [strokes, setStrokes] = useState<Stroke[]>([]);
 
@@ -44,7 +46,7 @@ export const ScribblePad = ({
       return;
     }
 
-    isDrawing.current = true;
+    isDrawing.current = enabled;
 
     setStrokes([
       ...strokes,

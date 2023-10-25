@@ -13,7 +13,7 @@ import {
     useDisclosure,
     Stack,
 } from "@chakra-ui/react";
-import { redirect } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { useAuth, useCurrentUser } from "../providers";
 import { MdClose } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -37,7 +37,7 @@ const Navbar = () => {
     }
 
     return (
-        <Box w="100vw" px="5" bg="white">
+        <Box position="relative" w="100vw" px="5" bg="white" zIndex="9999">
             <Flex h="70px" alignItems={"center"} justifyContent={"space-between"}>
                 <IconButton
                     size={"md"}
@@ -49,7 +49,7 @@ const Navbar = () => {
                     onClick={isOpen ? onClose : onOpen}
                 />
                 <HStack spacing={8} alignItems={"center"}>
-                    <Box>Logo</Box>
+                    <Link to="/">Logo</Link>
                     <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
                         <Box key="link">Test</Box>
                         <Box key="link">Test</Box>
@@ -58,6 +58,8 @@ const Navbar = () => {
                 </HStack>
                 <Flex alignItems={"center"}>
                     <Button
+                        as={Link}
+                        to="/questions/1"
                         variant={"solid"}
                         colorScheme={"teal"}
                         size={"sm"}

@@ -2,9 +2,9 @@ import { ReactNode } from "react";
 import { Box } from "@chakra-ui/react";
 import Navbar from "./Navbar"
 
-const HomeLayout = ({ children }: { children: ReactNode }) => {
+const HomeLayout = ({ bgColor, children }: { bgColor?: string, children: ReactNode }) => {
     return (
-        <Box>
+        <Box bg={bgColor} minH="100vh" overflowX="hidden">
             <Box zIndex={9999}>
                 <Navbar />
             </Box>
