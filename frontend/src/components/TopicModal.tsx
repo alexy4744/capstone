@@ -74,22 +74,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                                 </Box>
                             )}
                             {(type === "Difficulty" || type === "Topic") && (
-                                <>
-                                    {/* <SimpleGrid minChildWidth="80px" spacing="20px">
-                                        {topicList.map((t) => (
-                                            <Button
-                                                variant="badgeSelected"
-                                                colorScheme="gray"
-                                                onClick={() => {
-                                                    onClick(t);
-                                                    onClose();
-                                                }}>
-                                                {t.toLocaleUpperCase()}
-                                            </Button>
-                                        ))}
-                                    </SimpleGrid> */}
-                                    <TopicSelector onClick={handleClose} />
-                                </>
+                                <TopicSelector onClick={handleClose} />
                             )}
                         </Container>
                     </ModalBody>

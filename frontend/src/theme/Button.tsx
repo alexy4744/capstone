@@ -37,8 +37,15 @@ const startQuestion = defineStyle({
         color: "gray.500",
     }
 })
+const link = defineStyle({
+    bg: "transparent",
+    fontWeight: "semibold",
+    color: "blue",
+    textDecoration: "underline",
+    fontSize: "sm"
+})
 
 
 export const buttonTheme = defineStyleConfig({
-    variants: { badge, badgeSelected, dropDown, startQuestion }
+    variants: { badge, badgeSelected, dropDown, startQuestion, link }
 })
