@@ -3,6 +3,7 @@ import { Box, Grid, GridItem, Stack } from "@chakra-ui/react";
 import { ExamDate } from "../components/ExamDate";
 import { FocusTopics } from "../components/FocusTopics";
 import { MostPracticedTopics } from "../components/MostPracticedTopics";
+import { Preferences } from "../components/Preferences";
 
 export const Settings = () => {
   return (
@@ -19,6 +20,10 @@ export const Settings = () => {
 
       <Box backgroundColor="white" borderRadius="lg" padding={12}>
         <MostPracticedTopics />
+      </Box>
+
+      <Box backgroundColor="white" borderRadius="lg" padding={12}>
+        <Preferences />
       </Box>
     </Stack>
   );
