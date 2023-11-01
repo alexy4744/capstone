@@ -9,8 +9,8 @@ import { DefaultLayout } from "../layouts/DefaultLayout";
 
 export const Settings = () => {
   return (
-    <DefaultLayout>
-      <Stack backgroundColor="gray.100" gap={6} padding={{ base: 4, md: 12 }}>
+    <DefaultLayout justifyContent="center" display="flex" backgroundColor="gray.100">
+      <Stack gap={6} maxW="max-content" padding={{ base: 4, md: 12 }}>
         <SimpleGrid columns={{ md: 2 }} gap={6}>
           <Box backgroundColor="white" borderRadius="lg" padding={{ base: 8, md: 12 }}>
             <FocusTopics />

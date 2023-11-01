@@ -1,15 +1,21 @@
 import { PropsWithChildren } from "react";
 
+import { Box, BoxProps } from "@chakra-ui/react";
+
 import Navbar from "../../../components/Navbar";
 
-export const DefaultLayout = ({ children }: PropsWithChildren) => {
+type DefaultLayoutProps = BoxProps & PropsWithChildren;
+
+export const DefaultLayout = ({ children, ...props }: DefaultLayoutProps) => {
   return (
     <>
       <header>
         <Navbar />
       </header>
 
-      <main>{children}</main>
+      <main>
+        <Box {...props}>{children}</Box>
+      </main>
     </>
   );
 };
