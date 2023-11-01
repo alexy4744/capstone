@@ -15,7 +15,7 @@ import {
     Tooltip,
 } from "@chakra-ui/react";
 import { Link, redirect } from "react-router-dom";
-import { useAuth, useCurrentUser } from "../providers";
+import { useAuth } from "../providers";
 import { MdClose } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TbPencilSearch } from "react-icons/tb";
@@ -23,19 +23,11 @@ import { TbPencilSearch } from "react-icons/tb";
 const Navbar = () => {
     // const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const { currentUser, logout } = useAuth();
+    const { logout } = useAuth();
 
     const handleLogout = () => {
-        if (!currentUser) {
-            redirect("/");
-        } else {
-            logout()
-                .then(() => redirect("/"))
-                .catch((error) => {
-                    console.log("logout error: ", error)
-                })
-        }
-    }
+        logout().then(() => redirect("/"));
+    };
 
     return (
         <Box position="relative" w="100vw" px="5" bg="white" zIndex="999">
@@ -58,7 +50,7 @@ const Navbar = () => {
                     </HStack> */}
                 </HStack>
                 <Flex alignItems={"center"}>
-                    <Tooltip hasArrow label="Answer a random question" placement="bottom" style={{zIndex: "9999"}}>
+                    <Tooltip hasArrow label="Answer a random question" placement="bottom" style={{ zIndex: "9999" }}>
                         <Button
                             as={Link}
                             to="/questions/1"
@@ -102,8 +94,7 @@ const Navbar = () => {
                 </Box>
             ) : null} */}
         </Box>
-
-    )
-}
+    );
+};
 
 export default Navbar;

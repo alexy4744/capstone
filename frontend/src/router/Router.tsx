@@ -6,6 +6,7 @@ import { RequireNoAuth } from "./guards/RequireNoAuth";
 import { ForgotPassword, Login, Register } from "../pages/auth";
 import HomePage from "../pages/Home";
 import AnswerPage from "../pages/AnswerPage";
+import { Settings } from "../pages/settings";
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +39,11 @@ export const router = createBrowserRouter([
           {
             path: "questions/:id",
             element: <AnswerPage />
-          }
+          },
+          {
+            path: "settings",
+            element: <Settings />,
+          },
         ],
       },
     ],
