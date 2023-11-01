@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Box, Grid, GridItem, Heading, Stack, Tag, VStack } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, Stack, Tag } from "@chakra-ui/react";
 
 import { PieChart } from "../../../components/PieChart";
 
@@ -42,10 +42,10 @@ export const MostPracticedTopics = () => {
     <Stack gap={10}>
       <Heading size="lg">Most Practiced Topics This Week:</Heading>
 
-      <Grid templateColumns="repeat(3, 1fr)" gap={12}>
+      <SimpleGrid columns={{ lg: 3 }} gap={12}>
         {topicStats.map(({ name, totalCorrect, totalIncorrect }) => (
-          <GridItem key={name} as={VStack}>
-            <Box w="250px">
+          <Stack align="center">
+            <Box w="200px">
               <PieChart
                 slices={[
                   {
@@ -67,6 +67,7 @@ export const MostPracticedTopics = () => {
               color="#565656"
               fontSize="lg"
               fontWeight="bold"
+              h="full"
               justifyContent="center"
               marginTop="8"
               padding="3"
@@ -76,9 +77,9 @@ export const MostPracticedTopics = () => {
             >
               {name}
             </Tag>
-          </GridItem>
+          </Stack>
         ))}
-      </Grid>
+      </SimpleGrid>
     </Stack>
   );
 };

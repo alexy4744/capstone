@@ -6,7 +6,7 @@ export const Preferences = () => {
   const { preferences, updatePreferences } = usePreferences();
 
   return (
-    <Stack gap={6}>
+    <Stack gap={6} overflow="hidden">
       <Heading fontSize="3xl">Preferences:</Heading>
 
       <Switch
