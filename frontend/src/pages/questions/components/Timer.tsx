@@ -1,8 +1,10 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { usePreferences } from "../../../hooks";
 import { useState, useEffect } from "react";
 
-const Timer = () => {
+export const Timer = () => {
     const [time, setTime] = useState<number>(11890);
+    const { preferences } = usePreferences();
 
     useEffect(() => {
         let intervalId: NodeJS.Timeout;
@@ -19,7 +21,7 @@ const Timer = () => {
             <Text
                 fontWeight="bold"
                 fontSize={["md", "lg", "xl", "xl"]}
-                color={minutes > 1 ? "red.500" : "initial"}
+                color={(preferences.timerRed && minutes > 1) ? "red.500" : "initial"}
                 transition="color 0.3s">
                 {hours > 0 && `${hours}:`}
                 {minutes.toString().padStart(2, "0")}:
@@ -28,5 +30,3 @@ const Timer = () => {
         </Flex>
     );
 };
-
-export default Timer;

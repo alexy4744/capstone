@@ -5,7 +5,7 @@ import { FocusTopics } from "../components/FocusTopics";
 import { MostPracticedTopics } from "../components/MostPracticedTopics";
 import { Preferences } from "../components/Preferences";
 
-import { DefaultLayout } from "../layouts/DefaultLayout";
+import { DefaultLayout } from "../../../layout/DefaultLayout";
 
 export const Settings = () => {
   return (

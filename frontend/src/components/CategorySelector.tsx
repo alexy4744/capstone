@@ -5,8 +5,9 @@ export const DifficultySelector = ({ chosenDifficulty, onClick }: { chosenDiffic
 
     return (
         <SimpleGrid spacing="4" minChildWidth="50px">
-            {difficulty.map((d) => (
+            {difficulty.map((d, i) => (
                 <Button
+                    key = {i}
                     variant={chosenDifficulty === d ? "badgeSelected" : "badge"}
                     colorScheme={d}
                     onClick={() => onClick(d)}
@@ -23,8 +24,9 @@ export const TopicSelector = ({ chosenTopic, onClick }: { chosenTopic?: string, 
 
     return (
         <Flex justifyContent="center" flexWrap="wrap">
-            {topicList.map((t) => (
+            {topicList.map((t, i) => (
                 <Button
+                    key={i}
                     variant={chosenTopic === t ? "badgeSelected" : "badge"}
                     m="1"
                     colorScheme="blue"

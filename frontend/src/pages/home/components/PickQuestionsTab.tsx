@@ -1,5 +1,5 @@
 import { Flex, Container, Text, Box, Divider, AbsoluteCenter } from "@chakra-ui/react";
-import { DifficultySelector, TopicSelector } from "./CategorySelector";
+import { DifficultySelector, TopicSelector } from "../../../components/CategorySelector";
 import { useState } from "react";
 import QuestionCard from "./QuestionCard";
 

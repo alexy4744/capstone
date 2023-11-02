@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.11.0",
     "@uidotdev/usehooks": "^2.4.1",
     "chart.js": "^4.4.0",
+    "desmos-react": "^1.2.0",
     "firebase": "^10.4.0",
     "framer-motion": "^10.16.4",
     "konva": "^9.2.1",

@@ -75,7 +75,7 @@ const Navbar = () => {
                             />
                         </MenuButton>
                         <MenuList>
-                            <MenuItem>Link 1</MenuItem>
+                            <MenuItem as={Link} to="/settings">Settings</MenuItem>
                             <MenuItem>Link 2</MenuItem>
                             <MenuDivider />
                             <MenuItem onClick={handleLogout}>Logout</MenuItem>

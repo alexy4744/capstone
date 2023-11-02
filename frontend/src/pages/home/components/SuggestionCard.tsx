@@ -1,6 +1,6 @@
 import { Flex, Button, Box, Container, Heading, Text } from "@chakra-ui/react";
-import TopicModal from "./TopicModal";
-import { DifficultySelector } from "./CategorySelector";
+import TopicModal from "../../../components/TopicModal";
+import { DifficultySelector } from "../../../components/CategorySelector";
 import { useEffect, useState } from "react";
 import { BsPencilFill } from "react-icons/bs";
 

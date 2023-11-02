@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 
 import { Box, BoxProps } from "@chakra-ui/react";
 
-import Navbar from "../../../components/Navbar";
+import Navbar from "../components/Navbar";
 
 type DefaultLayoutProps = BoxProps & PropsWithChildren;
 
@@ -14,7 +14,7 @@ export const DefaultLayout = ({ children, ...props }: DefaultLayoutProps) => {
       </header>
 
       <main>
-        <Box {...props}>{children}</Box>
+        <Box overflowX="hidden" {...props}>{children}</Box>
       </main>
     </>
   );

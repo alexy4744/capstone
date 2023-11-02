@@ -98,7 +98,7 @@ const ProgressBar = ({ initalDate }: { initalDate: Date }) => {
                 ) : (
                     <Stepper size="sm" index={activeStep} gap="0" w="85%" zIndex="2" colorScheme="green">
                         {timeLeftInterval.map((step, index) => (
-                            <Flex flexDirection="column" justifyContent="center">
+                            <Flex key={index} flexDirection="column" justifyContent="center">
                                 <Step key={index} >
                                     <StepIndicator bg="white" >
                                         <StepStatus complete={<StepIcon />} />

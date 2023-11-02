@@ -12,10 +12,10 @@ import {
     Badge,
     SimpleGrid
 } from "@chakra-ui/react"
-import { easy, normal, hard } from "../theme/colors";
-import HomeLayout from "../components/HomeLayout";
+import { easy, normal, hard } from "../../../theme/colors";
+import { DefaultLayout } from "../../../layout/DefaultLayout";
 import ProgressBar from "../components/ProgressBar";
-import { PieChart, PieChartProps } from "../components/PieChart";
+import { PieChart, PieChartProps } from "../../../components/PieChart";
 import { useEffect, useState } from "react";
 import Card from "../components/SuggestionCard";
 import PickQuestionsTab from "../components/PickQuestionsTab";
@@ -32,13 +32,13 @@ const HomePage = () => {
     }, [])
 
     return (
-        <HomeLayout>
+        <DefaultLayout>
             <Flex h="450px" bg="#CBEFFF">
                 <Container py="10" maxW="6xl" centerContent >
                     <ProgressBar initalDate={new Date("2022-10-22")} />
                     <Flex w="100%" justifyContent="space-around" py="2">
                         {pieData && (pieData.map((slices, i) => (
-                            <Box w="170px" h="100%">
+                            <Box key={i} w="170px" h="100%">
                                 <Flex w="100%" justifyContent="center">
                                     <Box w="100px">
                                         <PieChart slices={slices} />
@@ -49,7 +49,6 @@ const HomePage = () => {
                                     <Badge mx="2" colorScheme={difficulty[i]} >{difficulty[i]}</Badge>
                                     Questions
                                 </Text>
-
                             </Box>
                         )))}
                     </Flex>
@@ -80,7 +79,7 @@ const HomePage = () => {
                     </TabPanels>
                 </Tabs>
             </Container>
-        </HomeLayout>
+        </DefaultLayout>
     );
 }
 
