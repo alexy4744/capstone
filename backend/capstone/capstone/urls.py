@@ -19,4 +19,5 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/questions/<int:question_id>/answers/', views.get_answers_for_question, name='get_answers_for_question'),
 ]
