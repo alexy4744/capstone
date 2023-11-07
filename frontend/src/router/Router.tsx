@@ -5,6 +5,7 @@ import { RequireNoAuth } from "./guards/RequireNoAuth";
 
 import { ForgotPassword, Login, Register } from "../pages/auth";
 import HomePage from "../pages/Home";
+import { Settings } from "../pages/settings";
 
 export const router = createBrowserRouter([
   {
@@ -32,8 +33,12 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <HomePage />
-          }
+            element: <HomePage />,
+          },
+          {
+            path: "settings",
+            element: <Settings />,
+          },
         ],
       },
     ],
