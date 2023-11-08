@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
+import { Flex, Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
 import { FaPencil } from "react-icons/fa6";
 
 export const ExamDate = () => {
@@ -10,16 +10,15 @@ export const ExamDate = () => {
   useEffect(() => {
     // TODO: Call API to get user's exam date and location
     const date = new Date().toLocaleDateString("en-US", {
-      weekday: "long",
       year: "numeric",
-      month: "long",
+      month: "numeric",
       day: "numeric",
     });
 
     const time = new Date().toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
-      timeZoneName: "long",
+      timeZoneName: "short",
     });
 
     setExamDate(`${date} ${time}`);
@@ -28,21 +27,23 @@ export const ExamDate = () => {
 
   return (
     <Stack gap={5}>
-      <Heading size="lg">
-        SAT Exam Date:
+      <Flex justifyContent="space-between">
+        <Heading fontSize="lg" letterSpacing="wide" pl="10%">
+          SAT Exam Date:
+        </Heading>
         <Button variant="link" colorScheme="blue" size="lg" marginLeft="4">
           <Box marginRight="1">
             <FaPencil />
           </Box>
           Edit
         </Button>
-      </Heading>
+      </Flex>
 
-      <Text fontSize="xl">{examDate || "No exam date set"}</Text>
+      <Text fontSize="3xl" textAlign="center">{examDate || "No exam date set"}</Text>
 
-      <Heading size="lg">SAT Exam Location:</Heading>
+      <Heading fontSize="lg" letterSpacing="wide" pl="10%">Location:</Heading>
 
-      <Text fontSize="xl">{examLocation}</Text>
+      <Text fontSize="2xl" textAlign="center">{examLocation}</Text>
     </Stack>
   );
 };

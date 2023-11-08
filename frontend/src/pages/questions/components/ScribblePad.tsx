@@ -23,7 +23,7 @@ type ScribblePadProps = {
 };
 
 export const ScribblePad = ({
-  backgroundColor = "#fff",
+  backgroundColor = "transparent",
   height = window.innerHeight,
   penColor = "#000",
   strokeWidth = 5,

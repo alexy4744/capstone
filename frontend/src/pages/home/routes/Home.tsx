@@ -39,16 +39,19 @@ const HomePage = () => {
                     <Flex w="100%" justifyContent="space-around" py="2">
                         {pieData && (pieData.map((slices, i) => (
                             <Box key={i} w="170px" h="100%">
-                                <Flex w="100%" justifyContent="center">
-                                    <Box w="100px">
-                                        <PieChart slices={slices} />
+                                <Flex w="100%" justifyContent="center" alignItems="flex-end">
+                                    <Box w="130px">
+                                        <PieChart questionNum={10} slices={slices} />
+                                    </Box>
+                                    <Box style={{ rotate: "-20deg"}} >
+                                        <Badge mx="2" colorScheme={difficulty[i]} >{difficulty[i]}</Badge>
                                     </Box>
                                 </Flex>
-                                <Text textAlign="center" fontWeight="bold" pt="5" fontSize={["sm", "md", "md", "md"]}>
+                                {/* <Text textAlign="center" fontWeight="bold" pt="5" fontSize={["sm", "md", "md", "md"]}>
                                     Answered 10
                                     <Badge mx="2" colorScheme={difficulty[i]} >{difficulty[i]}</Badge>
                                     Questions
-                                </Text>
+                                </Text> */}
                             </Box>
                         )))}
                     </Flex>

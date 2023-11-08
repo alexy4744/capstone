@@ -11,16 +11,19 @@ import {
 import { BsCalculatorFill, BsCalculator } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
-export const CalculatorTool = () => {
-    const [calculatorOn, setCalculatorOn] = useState<boolean>(false);
+type CalculatorContentProps = {
+    width?: string;
+    height?: string;
+}
 
+export const CalculatorContent = ({ width = "600px", height = "400px" }: CalculatorContentProps) => {
     const url = "https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6";
     const script = document.createElement("script");
     script.src = url;
     script.async = true;
     script.onload = () => {
         var elt = document.getElementById('calculator');
-        if (elt) {
+        if (elt && elt.childElementCount === 0) {
             var calculator = Desmos.GraphingCalculator(elt);
             calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
         }
@@ -32,22 +35,39 @@ export const CalculatorTool = () => {
     }, [])
 
     return (
-        <Popover placement="left" isOpen={calculatorOn}>
-            <PopoverTrigger>
-                <Tooltip label='Calculator (Desmos)' fontSize='md'>
-                    <Box as="button" onClick={() => setCalculatorOn(!calculatorOn)}>
-                        {calculatorOn ? <BsCalculatorFill size="30" /> : <BsCalculator size="30" />}
-                    </Box>
-                </Tooltip>
-            </PopoverTrigger>
-            <PopoverContent width="650px" height="450px">
-                <PopoverArrow />
-                <PopoverCloseButton onClick={() => setCalculatorOn(!calculatorOn)} />
-                <PopoverBody>
-                    <div id="calculator" style={{ width: "600px", height: "400px" }}></div>
-                </PopoverBody>
-            </PopoverContent>
-        </Popover>
+        <div id="calculator" style={{ width: width, height: height }}></div>
+    );
+};
+
+type CalculatorToolProps = {
+    calculatorOn: boolean; 
+    handleCalculatorToolClick: Function
+}
+
+export const CalculatorTool = ({ calculatorOn, handleCalculatorToolClick }: CalculatorToolProps) => {
+
+    return (
+        // <Popover placement="left" isOpen={calculatorOn}>
+        //     <PopoverTrigger>
+        //         <Tooltip label='Calculator (Desmos)' fontSize='md'>
+        //             <Box as="button" onClick={() => setCalculatorOn(!calculatorOn)}>
+        //                 {calculatorOn ? <BsCalculatorFill size="30" /> : <BsCalculator size="30" />}
+        //             </Box>
+        //         </Tooltip>
+        //     </PopoverTrigger>
+        //     <PopoverContent width="650px" height="450px">
+        //         <PopoverArrow />
+        //         <PopoverCloseButton onClick={() => setCalculatorOn(!calculatorOn)} />
+        //         <PopoverBody>
+        //             <div id="calculator" style={{ width: "600px", height: "400px" }}></div>
+        //         </PopoverBody>
+        //     </PopoverContent>
+        // </Popover>
+        <Tooltip label='Calculator (Desmos)' fontSize='md'>
+            <Box as="button" onClick={() => handleCalculatorToolClick()}>
+                {calculatorOn ? <BsCalculatorFill size="30" /> : <BsCalculator size="30" />}
+            </Box>
+        </Tooltip>
     );
 };
 

@@ -1,6 +1,7 @@
 import {
     Box,
     Flex,
+    Text,
     Avatar,
     HStack,
     IconButton,
@@ -18,7 +19,8 @@ import { Link, redirect } from "react-router-dom";
 import { useAuth } from "../providers";
 import { MdClose } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { TbPencilSearch } from "react-icons/tb";
+import { TbPencilSearch, TbOvalVerticalFilled, TbOvalVertical } from "react-icons/tb";
+import Logo from "../assets/navLogo.png";
 
 const Navbar = () => {
     // const { isOpen, onOpen, onClose } = useDisclosure()
@@ -30,8 +32,23 @@ const Navbar = () => {
     };
 
     return (
-        <Box position="relative" w="100vw" px="5" bg="white" zIndex="999">
-            <Flex h="70px" alignItems={"center"} justifyContent={"space-between"}>
+        <Box position="relative" zIndex="999" w="100vw" px="5" bg="#F5FBFF" overflowX="clip">
+            {/* <Box position="absolute" w="130px" h="10px" bg="#F5FBFF" right="-2vw" bottom="-3vh" style = {{ rotate: "10deg" }} />
+            <Box position="absolute" w="130px" h="10px" bg="#F5FBFF" right="-2vw" bottom="-3vh" style = {{ rotate: "20deg" }} />
+            <Box position="absolute" w="130px" h="10px" bg="#F5FBFF" right="-2vw" bottom="-3vh" style = {{ rotate: "30deg" }} /> */}
+            <Box position="absolute" right="-5vw" bottom="-7vh" style={{ rotate: "10deg" }} >
+                <TbOvalVertical size="150" color="#F5FBFF"/>
+            </Box>
+            <Box position="absolute" right="2vw" bottom="-4vh" >
+                <TbOvalVertical size="100" color="#F5FBFF"/>
+            </Box>
+            <Box position="absolute" left="2vw" bottom="-4vh" >
+                <TbOvalVertical size="100" color="#F5FBFF"/>
+            </Box>
+            <Box position="absolute" left="-5vw" bottom="-7vh" style={{ rotate: "-10deg" }} >
+                <TbOvalVertical size="150" color="#F5FBFF"/>
+            </Box>
+            <Flex position="relative" h="85px" alignItems="center" justifyContent="space-between" zIndex="9999" bg="#F5FBFF">
                 {/* <IconButton
                     size={"md"}
                     as={isOpen ? MdClose : GiHamburgerMenu}
@@ -41,23 +58,25 @@ const Navbar = () => {
                     display={{ md: "none" }}
                     onClick={isOpen ? onClose : onOpen}
                 /> */}
-                <HStack spacing={8} alignItems={"center"}>
-                    <Link to="/">Logo</Link>
+                <HStack spacing={8} alignItems="center">
+                    <Link to="/">
+                        <img src={Logo} width="260px" />
+                    </Link>
                     {/* <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
                         <Link to="/">Test</Link>
                         <Link to="/">Test</Link>
                         <Link to="/">Test</Link>
                     </HStack> */}
                 </HStack>
-                <Flex alignItems={"center"}>
+                <Flex alignItems="center">
                     <Tooltip hasArrow label="Answer a random question" placement="bottom" style={{ zIndex: "9999" }}>
                         <Button
                             as={Link}
                             to="/questions/1"
-                            variant={"solid"}
-                            colorScheme={"teal"}
+                            variant={"outline"}
+                            colorScheme={"easy"}
                             size={"sm"}
-                            mr={4}
+                            mr={8}
                             leftIcon={<TbPencilSearch />}>
                             Quick Start
                         </Button>
