@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import QuestionListCreateAPIView, AnswerListCreateAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/questions/<int:question_id>/answers/', views.get_answers_for_question, name='get_answers_for_question'),
+    path('api/questions/', QuestionListCreateAPIView.as_view(), name='question-list'),
+    path('api/answers/', AnswerListCreateAPIView.as_view(), name='answer-list'),
 ]

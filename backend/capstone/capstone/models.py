@@ -1,16 +1,12 @@
 from django.db import models
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=255)
-    pub_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.question_text
+    question_text = models.TextField()
+    image = models.ImageField(upload_to='question_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer_text = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.answer_text
+    image = models.ImageField(upload_to='answer_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
