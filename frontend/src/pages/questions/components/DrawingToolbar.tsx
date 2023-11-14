@@ -7,8 +7,8 @@ type DrawingToolbarProps = {
     selectedColor: string;
     drawingOn: boolean;
     eraserOn: boolean;
-    handleDrawing: Function;
-    handleSwitchPenTool: Function;
+    handleDrawing: (s: string, b?: boolean) => void;
+    handleSwitchPenTool: () => void;
 }
 
 export const DrawingToolbar = ({ selectedColor, drawingOn, eraserOn, handleDrawing, handleSwitchPenTool } : DrawingToolbarProps) => {

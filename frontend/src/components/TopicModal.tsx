@@ -1,5 +1,4 @@
 import {
-    Flex,
     Box,
     Button,
     Container,
@@ -13,8 +12,6 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-    HStack,
-    Badge,
     SimpleGrid
 } from "@chakra-ui/react";
 import { TfiArrowCircleDown } from "react-icons/tfi";
@@ -23,7 +20,7 @@ import { TopicSelector } from "./CategorySelector";
 type TopicModalProps = {
     type: string,
     topic: string,
-    onClick: Function
+    onClick: (t: string) => void
 }
 
 const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) => {

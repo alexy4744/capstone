@@ -35,8 +35,8 @@ const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
                 title: "Difficulty Based Questions",
                 description: "All Questions would be"
             });
-        };
-    }, []);
+        }
+    }, [type]);
 
     return (
         <Flex

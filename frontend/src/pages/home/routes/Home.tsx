@@ -2,60 +2,68 @@ import {
     Container,
     Flex,
     Box,
-    Text,
     Tabs,
     Tab,
     TabPanel,
     TabPanels,
     TabList,
     Heading,
-    Badge,
-    SimpleGrid
+    SimpleGrid,
 } from "@chakra-ui/react"
-import { easy, normal, hard } from "../../../theme/colors";
+import { motion } from "framer-motion";
+import { BiSpaceBar } from "react-icons/bi";
+import { PiPushPinDuotone } from "react-icons/pi";
 import { DefaultLayout } from "../../../layout/DefaultLayout";
-import ProgressBar from "../components/ProgressBar";
-import { PieChart, PieChartProps } from "../../../components/PieChart";
-import { useEffect, useState } from "react";
+import { ProgressBar } from "../components/ProgressBar";
 import Card from "../components/SuggestionCard";
 import PickQuestionsTab from "../components/PickQuestionsTab";
+import { DifficultyStats } from "../components/DifficultyStats";
+import { ExamDate } from "../../settings/components/ExamDate";
 
 const HomePage = () => {
-    const [pieData, setPieData] = useState<PieChartProps["slices"][] | null>();
-    const difficulty: string[] = ["easy", "normal", "hard"];
-    useEffect(() => {
-        setPieData([
-            [{ color: easy[100], label: "test", percentage: 50 }, { color: easy[300], label: "testing", percentage: 50 }],
-            [{ color: normal[100], label: "test", percentage: 70 }, { color: normal[300], label: "testing", percentage: 30 }],
-            [{ color: hard[100], label: "test", percentage: 30 }, { color: hard[300], label: "testing", percentage: 70 }]
-        ]);
-    }, [])
 
     return (
         <DefaultLayout>
-            <Flex h="450px" bg="#CBEFFF">
-                <Container py="10" maxW="6xl" centerContent >
-                    <ProgressBar initalDate={new Date("2022-10-22")} />
-                    <Flex w="100%" justifyContent="space-around" py="2">
-                        {pieData && (pieData.map((slices, i) => (
-                            <Box key={i} w="170px" h="100%">
-                                <Flex w="100%" justifyContent="center" alignItems="flex-end">
-                                    <Box w="130px">
-                                        <PieChart questionNum={10} slices={slices} />
-                                    </Box>
-                                    <Box style={{ rotate: "-20deg"}} >
-                                        <Badge mx="2" colorScheme={difficulty[i]} >{difficulty[i]}</Badge>
-                                    </Box>
+            <Flex position="relative" h="450px">
+                <motion.div
+                    style={{ display: "flex", position: "absolute", width: "100%", height: "370px" }}
+                    animate={{ height: "450px" }}
+                    transition={{ duration: 1.5, type: "spring" }}>
+                    <Flex position="relative" width="100%">
+                        <Flex bg="#CBEFFF" borderBottom="5px solid #F3F3F3" width="100%">
+                            <Container py="10" maxW="6xl" centerContent >
+                                <Flex position="relative" w="100%" alignItems="center">
+                                    <Heading py="2" position="absolute" top="-10px" style={{ rotate: "-10deg" }}>SAT</Heading>
+                                    <Flex w="100%" pt="18">
+                                        <Box w="80%" alignSelf={"center"}>
+                                            <ProgressBar initialDate={Date.parse("04 Jun 2023 01:00:00 EST")} />
+                                        </Box>
+                                        <Flex
+                                            bg="white"
+                                            position="relative"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            borderRadius="lg"
+                                            mx="3"
+                                            style={{ rotate: "10deg" }}
+                                        >
+                                            <Box position="absolute" top="-15px" right="-18px">
+                                                <PiPushPinDuotone size={40} color="#de7b7b" />
+                                            </Box>
+                                            <Box w="200px" py="2">
+                                                <ExamDate showLocation={false} />
+                                            </Box>
+                                        </Flex>
+                                    </Flex>
                                 </Flex>
-                                {/* <Text textAlign="center" fontWeight="bold" pt="5" fontSize={["sm", "md", "md", "md"]}>
-                                    Answered 10
-                                    <Badge mx="2" colorScheme={difficulty[i]} >{difficulty[i]}</Badge>
-                                    Questions
-                                </Text> */}
-                            </Box>
-                        )))}
+                                <DifficultyStats />
+                            </Container>
+                        </Flex>
+                        <Flex position="absolute" width="100%" bottom="-8vh" justifyContent="center">
+                            <BiSpaceBar size="100" color="#778287" />
+                        </Flex>
                     </Flex>
-                </Container>
+                </motion.div>
             </Flex>
             <Container maxW="6xl" py="10">
                 <Heading fontWeight="semibold" fontSize="2xl">How do you want to study today?</Heading>

@@ -7,8 +7,7 @@ export const Timer = () => {
     const { preferences } = usePreferences();
 
     useEffect(() => {
-        let intervalId: NodeJS.Timeout;
-        intervalId = setInterval(() => setTime(time + 1), 10);
+        const intervalId = setInterval(() => setTime(time + 1), 10);
         return () => clearInterval(intervalId);
     })
 

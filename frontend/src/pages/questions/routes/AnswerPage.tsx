@@ -1,10 +1,8 @@
-import { Text, Flex, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, Badge, calc } from "@chakra-ui/react";
+import { Text, Flex, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Badge } from "@chakra-ui/react";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useParams } from "react-router-dom";
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 import { Timer } from "../components/Timer";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ScribblePad } from "../components/ScribblePad";
+import { useState } from "react";
 import { DrawingToolbar } from "../components/DrawingToolbar";
 import { ReferenceTool } from "../components/ReferenceTool";
 import { CalculatorTool } from "../components/CalculatorTool";
@@ -12,7 +10,7 @@ import { DrawerStatus, ToolDrawer } from "../components/ToolDrawer";
 import { Workspace } from "../components/Workspace";
 
 const AnswerPage = () => {
-    const param = useParams();
+    // const param = useParams();
 
     const [drawingOn, setDrawingOn] = useState<boolean>(false);
     const [eraserOn, setEraserOn] = useState<boolean>(false);
@@ -53,7 +51,7 @@ const AnswerPage = () => {
                 bg="#F5FBFF"
                 px="10"
                 py="2"
-                zIndex="1">
+                zIndex="999">
                 <BreadcrumbItem>
                     <BreadcrumbLink href='#'>SAT</BreadcrumbLink>
                 </BreadcrumbItem>
@@ -91,22 +89,6 @@ const AnswerPage = () => {
                     </Box>
                 </Flex>
                 <ToolDrawer {... {drawerStatus, calculatorOn, referenceOn}} handleToggle={() => setDrawerStatus(drawerStatus === "active" ? "inactive" : "active")}/>
-                {/* <motion.div
-                    variants={drawerVariants}
-                    animate=""
-                    style={{
-                        position: "fixed",
-                        zIndex: "9",
-                        right: "10%",
-                        bottom: "0px",
-                        width: "350px",
-                        backgroundColor: "black"
-                    }}
-                >
-                    <Box>
-                        {drawerContent}
-                    </Box>
-                </motion.div> */}
             </Flex>
         </DefaultLayout>
     );

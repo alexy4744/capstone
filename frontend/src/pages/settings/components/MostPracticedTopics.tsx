@@ -47,6 +47,7 @@ export const MostPracticedTopics = () => {
           <Stack align="center">
             <Box w="200px">
               <PieChart
+              questionNum={10}
                 slices={[
                   {
                     label: "Correct",

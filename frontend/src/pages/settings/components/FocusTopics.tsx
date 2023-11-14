@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Avatar, Box, Button, Stack, Tag, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Stack, Text } from "@chakra-ui/react";
 import { FaPencil } from "react-icons/fa6";
 
 import { useCurrentUser } from "../../../providers";

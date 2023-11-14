@@ -4,18 +4,17 @@ import { Box, BoxProps } from "@chakra-ui/react";
 
 import Navbar from "../components/Navbar";
 
-type DefaultLayoutProps = BoxProps & PropsWithChildren;
+type DefaultLayoutProps = { backgroundColor?: string } & BoxProps & PropsWithChildren;
 
-export const DefaultLayout = ({ children, ...props }: DefaultLayoutProps) => {
+export const DefaultLayout = ({ backgroundColor = "white", children, ...props }: DefaultLayoutProps) => {
   return (
-    <>
+    <Box minH="100vh" backgroundColor={backgroundColor}>
       <header>
         <Navbar />
       </header>
-
       <main>
-        <Box overflowX="hidden" {...props}>{children}</Box>
+        <Box overflowX="clip" {...props}>{children}</Box>
       </main>
-    </>
+    </Box>
   );
 };

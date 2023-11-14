@@ -1,4 +1,4 @@
-import { Box, Container, SimpleGrid, Stack } from "@chakra-ui/react";
+import { Box, SimpleGrid, Stack } from "@chakra-ui/react";
 
 import { ExamDate } from "../components/ExamDate";
 import { FocusTopics } from "../components/FocusTopics";
@@ -17,7 +17,7 @@ export const Settings = () => {
           </Box>
 
           <Box backgroundColor="white" borderRadius="lg" padding={{ base: 4, md: 6 }}>
-            <ExamDate />
+            <ExamDate editable/>
           </Box>
         </SimpleGrid>
 

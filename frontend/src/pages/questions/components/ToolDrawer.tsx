@@ -1,6 +1,5 @@
 import { AbsoluteCenter, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { BsCalculatorFill, BsBookFill } from "react-icons/bs";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 import { CalculatorContent } from "./CalculatorTool";
@@ -10,12 +9,12 @@ export type DrawerStatus = "active" | "inactive" | "stop";
 
 type ToolDrawerProps = {
     drawerStatus: DrawerStatus;
-    handleToggle: Function;
+    handleToggle: () => void;
     calculatorOn: boolean;
     referenceOn: boolean;
 }
 
-export const ToolDrawer = ({ drawerStatus, handleToggle, calculatorOn, referenceOn }: ToolDrawerProps) => {
+export const ToolDrawer = ({ drawerStatus, handleToggle, calculatorOn }: ToolDrawerProps) => {
     const drawerVariants = {
         stop: {
             height: "0px",

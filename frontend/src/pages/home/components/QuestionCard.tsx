@@ -1,4 +1,4 @@
-import { Box, Flex, Container, Heading, Button, Badge } from "@chakra-ui/react"
+import { Box, Flex, Container, Heading, Badge } from "@chakra-ui/react"
 
 const QuestionCard = () => {
     return (
@@ -8,8 +8,7 @@ const QuestionCard = () => {
             pt="5"
             borderRadius="lg"
             minH="100px"
-            borderColor="gray.500"
-            onClick={()=>console.log("it works")}>
+            borderColor="gray.500">
             <Container maxW="6xl">
                 <Flex justifyContent="space-between">
                     <Heading fontWeight="semibold" fontSize="lg">SAT- No Calculator Allowed</Heading>
