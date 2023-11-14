@@ -11,15 +11,18 @@ type CalculatorContentProps = {
 }
 
 export const CalculatorContent = ({ width = "600px", height = "400px" }: CalculatorContentProps) => {
-    const url = "https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6";
     const script = document.createElement("script");
-    script.src = url;
-    script.async = true;
-    script.onload = () => {
-        const elt = document.getElementById('calculator');
-        if (elt && elt.childElementCount === 0) {
-            const calculator = Desmos.GraphingCalculator(elt);
-            calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
+    console.log("the src would be ", import.meta.env.VITE_DESMOS_API)
+    console.log("and the other things he defined ", import.meta.env.VITE_FIREBASE_AUTH_EMULATOR_HOST)
+    if (import.meta.env.VITE_DESMOS_API) {
+        script.src = import.meta.env.VITE_DESMOS_API;
+        script.async = true;
+        script.onload = () => {
+            const elt = document.getElementById('calculator');
+            if (elt && elt.childElementCount === 0) {
+                const calculator = Desmos.GraphingCalculator(elt);
+                calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
+            }
         }
     }
 
@@ -34,7 +37,7 @@ export const CalculatorContent = ({ width = "600px", height = "400px" }: Calcula
 };
 
 type CalculatorToolProps = {
-    calculatorOn: boolean; 
+    calculatorOn: boolean;
     handleCalculatorToolClick: () => void;
 }
 

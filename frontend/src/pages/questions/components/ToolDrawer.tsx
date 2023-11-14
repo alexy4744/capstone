@@ -17,14 +17,17 @@ type ToolDrawerProps = {
 export const ToolDrawer = ({ drawerStatus, handleToggle, calculatorOn }: ToolDrawerProps) => {
     const drawerVariants = {
         stop: {
+            display: "none",
             height: "0px",
             transition: { duration: 1, type: "spring" }
         },
         active: {
+            display: "block",
             height: calculatorOn ? "560px" : "360px",
             transition: { duration: 1, type: "spring" }
         },
         inactive: {
+            display: "block",
             height: "40px",
             transition: { duration: 1, type: "spring" }
         }
@@ -34,12 +37,15 @@ export const ToolDrawer = ({ drawerStatus, handleToggle, calculatorOn }: ToolDra
             variants={drawerVariants}
             animate={drawerStatus}
             style={{
+                display: "none",
                 position: "fixed",
                 zIndex: "9",
                 right: "10%",
                 bottom: "0px",
                 width: calculatorOn ? "670px" : "520px",
-                backgroundColor: "gray",
+                height: "0px",
+                backgroundColor: "#F5FBFF",
+                border: "1px solid gray",
                 borderRadius: "20px"
             }}
         >
@@ -47,9 +53,9 @@ export const ToolDrawer = ({ drawerStatus, handleToggle, calculatorOn }: ToolDra
                 justifyContent="space-around"
                 alignItems="center"
                 h="40px"
-                border="1px solid gray"
+                borderBottom="1px solid gray"
                 borderTopRadius="20px"
-                bgColor="#F5FBFF"
+                bgColor="gray.50"
                 onClick={() => handleToggle()}
                 cursor="pointer">
                 <RxDragHandleHorizontal size="30" />

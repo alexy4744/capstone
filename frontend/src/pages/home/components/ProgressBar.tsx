@@ -10,9 +10,7 @@ export const ProgressBar = ({ initialDate }: { initialDate?: number }) => {
     useEffect(() => {
         if (initialDate) {
             const initialDifference = testDate - initialDate;
-            console.log("initialDifference ", initialDifference);
             const currentDifference = testDate - Date.now();
-            console.log("currentDifference ", currentDifference);
             if (initialDifference > 0 && currentDifference > 0) {
                 setProgessPercent((currentDifference / initialDifference)*100);
             }
