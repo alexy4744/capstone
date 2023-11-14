@@ -12,8 +12,6 @@ type CalculatorContentProps = {
 
 export const CalculatorContent = ({ width = "600px", height = "400px" }: CalculatorContentProps) => {
     const script = document.createElement("script");
-    console.log("the src would be ", import.meta.env.VITE_DESMOS_API)
-    console.log("and the other things he defined ", import.meta.env.VITE_FIREBASE_AUTH_EMULATOR_HOST)
     if (import.meta.env.VITE_DESMOS_API) {
         script.src = import.meta.env.VITE_DESMOS_API;
         script.async = true;
