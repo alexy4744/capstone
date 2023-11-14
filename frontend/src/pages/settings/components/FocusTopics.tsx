@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Avatar, Box, Button, Stack, Tag, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Stack, Text } from "@chakra-ui/react";
 import { FaPencil } from "react-icons/fa6";
 
 import { useCurrentUser } from "../../../providers";
@@ -50,18 +50,15 @@ export const FocusTopics = () => {
 
         <Stack direction="row" gap={4} wrap="wrap">
           {topics.map((topic) => (
-            <Tag
+            <Button
               key={topic}
-              size="lg"
-              variant="solid"
-              bgColor="#e2ab93"
-              color="#565656"
+              variant="badge"
+              colorScheme="blue"
               fontWeight="bold"
-              padding="0.5rem 1rem"
               whiteSpace="nowrap"
             >
               {topic}
-            </Tag>
+            </Button>
           ))}
         </Stack>
       </Stack>

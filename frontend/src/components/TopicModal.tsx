@@ -1,5 +1,4 @@
 import {
-    Flex,
     Box,
     Button,
     Container,
@@ -13,8 +12,6 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-    HStack,
-    Badge,
     SimpleGrid
 } from "@chakra-ui/react";
 import { TfiArrowCircleDown } from "react-icons/tfi";
@@ -23,10 +20,8 @@ import { TopicSelector } from "./CategorySelector";
 type TopicModalProps = {
     type: string,
     topic: string,
-    onClick: Function
+    onClick: (t: string) => void
 }
-
-const topicList: string[] = ["random", "algebra", "geometery", "trig", "math", "things", "stuff"];
 
 const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -53,7 +48,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                     <ModalCloseButton />
                     <ModalBody>
                         <Container>
-                            {type != "Topic" ? (
+                            {type != "Topic" && (
                                 <SimpleGrid spacing="20px">
                                     <Button onClick={() => {
                                         handleClose("Calculator Allowed");
@@ -66,33 +61,18 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                                         Calculator Not Allowed
                                     </Button>
                                 </SimpleGrid>
-                            ) : <></>}
-                            {type === "Difficulty" ? (
+                            )}
+                            {type === "Difficulty" && (
                                 <Box position='relative' padding='10'>
                                     <Divider />
                                     <AbsoluteCenter bg='white' px='4'>
                                         Topics
                                     </AbsoluteCenter>
                                 </Box>
-                            ) : <></>}
-                            {type === "Difficulty" || type === "Topic" ? (
-                                <>
-                                    {/* <SimpleGrid minChildWidth="80px" spacing="20px">
-                                        {topicList.map((t) => (
-                                            <Button
-                                                variant="badgeSelected"
-                                                colorScheme="gray"
-                                                onClick={() => {
-                                                    onClick(t);
-                                                    onClose();
-                                                }}>
-                                                {t.toLocaleUpperCase()}
-                                            </Button>
-                                        ))}
-                                    </SimpleGrid> */}
-                                    <TopicSelector onClick={handleClose} />
-                                </>
-                            ) : <></>}
+                            )}
+                            {(type === "Difficulty" || type === "Topic") && (
+                                <TopicSelector onClick={handleClose} />
+                            )}
                         </Container>
                     </ModalBody>
 

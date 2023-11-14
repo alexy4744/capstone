@@ -1,6 +1,6 @@
 import { Heading, Stack, Switch } from "@chakra-ui/react";
 
-import { usePreferences } from "../hooks/use-preferences";
+import { usePreferences } from "../../../hooks/use-preferences";
 
 export const Preferences = () => {
   const { preferences, updatePreferences } = usePreferences();
