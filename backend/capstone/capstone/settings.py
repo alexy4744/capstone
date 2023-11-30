@@ -87,9 +87,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'nextstep',
-        'USER': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'USER': 'avnadmin',
+        'HOST': 'nextstep-mysql-nextstep.a.aivencloud.com',
+        'PORT': '15327',
     }
 }
 
