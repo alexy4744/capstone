@@ -1,23 +1,81 @@
-import { Box, SimpleGrid, Stack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
-import { ExamDate } from "../components/ExamDate";
-import { FocusTopics } from "../components/FocusTopics";
+import { Box, SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
+
+import { Settings as SavedSettings, getSettings } from "../../../api/settings";
+
+import { ExamDetails } from "../components/ExamDetails";
 import { MostPracticedTopics } from "../components/MostPracticedTopics";
 import { Preferences } from "../components/Preferences";
+import { UpdateExamDateModal } from "../components/UpdateExamDateModal";
+import { UpdateExamLocationModal } from "../components/UpdateExamLocationModal";
+import { UpdateFocusTopicsModal } from "../components/UpdateFocusTopicsModal";
+import { UpdateUserEmailModal } from "../components/UpdateUserEmailModal";
+import { UserProfile } from "../components/UserProfile";
 
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 
+import { useCurrentUser } from "../../../providers";
+
 export const Settings = () => {
+  const currentUser = useCurrentUser();
+
+  const [settings, setSettings] = useState<SavedSettings | null>(null);
+
+  const {
+    isOpen: isUpdateEmailModalOpened,
+    onOpen: onUpdateEmailModalOpen,
+    onClose: onUpdateEmailModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isUpdateExamDateModalOpened,
+    onOpen: onUpdateExamDateModalOpen,
+    onClose: onUpdateExamDateModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isUpdateExamLocationModalOpened,
+    onOpen: onUpdateExamLocationModalOpen,
+    onClose: onUpdateExamLocationModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isUpdateFocusTopicsModalOpened,
+    onOpen: onUpdateFocusTopicsModalOpen,
+    onClose: onUpdateFocusTopicsModalClose,
+  } = useDisclosure();
+
+  useEffect(() => {
+    getSettings().then(setSettings);
+  }, [
+    isUpdateExamDateModalOpened,
+    isUpdateExamLocationModalOpened,
+    isUpdateFocusTopicsModalOpened,
+  ]);
+
   return (
     <DefaultLayout justifyContent="center" display="flex" backgroundColor="gray.50">
       <Stack gap={6} maxW="6xl" padding={{ base: 4, md: 12 }}>
         <SimpleGrid columns={{ md: 2 }} gap={10}>
           <Box backgroundColor="white" borderRadius="lg" padding={{ base: 4, md: 6 }}>
-            <FocusTopics />
+            <UserProfile
+              currentUser={currentUser}
+              editable
+              focusTopics={settings?.focusTopics || []}
+              onEditEmail={onUpdateEmailModalOpen}
+              onEditFocusTopics={onUpdateFocusTopicsModalOpen}
+            />
           </Box>
 
           <Box backgroundColor="white" borderRadius="lg" padding={{ base: 4, md: 6 }}>
-            <ExamDate editable/>
+            <ExamDetails
+              editable
+              examDate={settings?.examDate?.toDate()}
+              examLocation={settings?.examLocation}
+              onEditDate={onUpdateExamDateModalOpen}
+              onEditLocation={onUpdateExamLocationModalOpen}
+            />
           </Box>
         </SimpleGrid>
 
@@ -31,6 +89,31 @@ export const Settings = () => {
           </Box>
         </SimpleGrid>
       </Stack>
+
+      <UpdateExamDateModal
+        isOpen={isUpdateExamDateModalOpened}
+        onClose={onUpdateExamDateModalClose}
+        onSave={onUpdateExamDateModalClose}
+      />
+
+      <UpdateExamLocationModal
+        isOpen={isUpdateExamLocationModalOpened}
+        onClose={onUpdateExamLocationModalClose}
+        onSave={onUpdateExamLocationModalClose}
+      />
+
+      <UpdateFocusTopicsModal
+        currentFocusTopics={settings?.focusTopics || []}
+        isOpen={isUpdateFocusTopicsModalOpened}
+        onClose={onUpdateFocusTopicsModalClose}
+        onSave={onUpdateFocusTopicsModalClose}
+      />
+
+      <UpdateUserEmailModal
+        isOpen={isUpdateEmailModalOpened}
+        onClose={onUpdateEmailModalClose}
+        onSave={onUpdateEmailModalClose}
+      />
     </DefaultLayout>
   );
 };
