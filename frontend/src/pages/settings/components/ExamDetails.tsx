@@ -25,7 +25,7 @@ export const ExamDetails = ({
     <Stack gap={5}>
       {showDate && (
         <>
-          <Flex>
+          <Flex ml={4}>
             <Heading fontSize="lg" letterSpacing="wide">
               SAT Exam Date:
             </Heading>
@@ -74,7 +74,7 @@ export const ExamDetails = ({
 
       {showLocation && (
         <>
-          <Flex>
+          <Flex ml={4}>
             <Heading fontSize="lg" letterSpacing="wide">
               SAT Exam Location:
             </Heading>
