@@ -15,10 +15,10 @@ import { BiSpaceBar } from "react-icons/bi";
 import { PiPushPinDuotone } from "react-icons/pi";
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 import { ProgressBar } from "../components/ProgressBar";
-import Card from "../components/SuggestionCard";
 import PickQuestionsTab from "../components/PickQuestionsTab";
 import { DifficultyStats } from "../components/DifficultyStats";
 import { ExamDate } from "../../settings/components/ExamDate";
+import { SuggestionCard } from "../components/SuggestionCard";
 
 const HomePage = () => {
 
@@ -76,9 +76,9 @@ const HomePage = () => {
                     <TabPanels>
                         <TabPanel>
                             <SimpleGrid minChildWidth="320px" spacing="40px">
-                                <Card type="Difficulty" />
-                                <Card type="Recommended" />
-                                <Card type="Topic" />
+                                <SuggestionCard type="Difficulty" />
+                                <SuggestionCard type="Recommended" />
+                                <SuggestionCard type="Topic" />
                             </SimpleGrid>
                         </TabPanel>
                         <TabPanel>

@@ -1,24 +1,37 @@
 import { useEffect, useState } from "react";
 
-import { Avatar, Box, Button, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Button, Container, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { FaPencil } from "react-icons/fa6";
 
 import { useCurrentUser } from "../../../providers";
+import { TopicSelector } from "../../../components/CategorySelector";
 
 export const FocusTopics = () => {
   const { displayName, email } = useCurrentUser();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [topics, setTopics] = useState<string[]>([]);
 
+  // const handleSelect = (t: string) => {
+  //   if (topics.includes(t)) {
+  //     setTopics(topics.filter(i => i !== t));
+  //   } else {
+  //     const newTopics = topics;
+  //     newTopics.push(t);
+  //     setTopics(newTopics);
+  //   }
+  // }
+
   useEffect(() => {
     // TODO: Call API to get user's focus topics
-    setTopics([
-      "Hearts of Algebra",
-      "Problem Solving and Data Analysis",
-      "Geometry",
-      "Trigonometry",
-    ]);
+    // setTopics([
+    //   "Hearts of Algebra",
+    //   "Problem Solving and Data Analysis",
+    //   "Geometry",
+    //   "Trigonometry",
+    // ]);
   }, []);
+
 
   return (
     <Stack gap={8}>
@@ -40,12 +53,28 @@ export const FocusTopics = () => {
             Focus topics:
           </Text>
 
-          <Button variant="link" colorScheme="blue">
-            <Box marginRight="1">
-              <FaPencil />
-            </Box>
+          <Button onClick={onOpen} variant="link" colorScheme="blue" leftIcon={<FaPencil />}>
             Edit
           </Button>
+
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Select Your Focus Topics</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Container>
+                  <TopicSelector chosenTopic={topics} onClickMultiple={(t) => { setTopics(t) }} />
+                </Container>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme='blue' mr={3} onClick={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </Stack>
 
         <Stack direction="row" gap={4} wrap="wrap">

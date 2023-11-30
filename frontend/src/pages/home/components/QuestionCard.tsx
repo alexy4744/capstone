@@ -1,6 +1,6 @@
 import { Box, Flex, Container, Heading, Badge } from "@chakra-ui/react"
 
-const QuestionCard = () => {
+export const QuestionCard = () => {
     return (
         <Box
             flexDirection="column"
@@ -18,5 +18,3 @@ const QuestionCard = () => {
         </Box>
     );
 };
-
-export default QuestionCard;
