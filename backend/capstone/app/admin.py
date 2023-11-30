@@ -4,3 +4,4 @@ from . models import *
 # Register your models here.
 admin.register(Question)
 admin.register(Answer)
+admin.register(UserResponse)
