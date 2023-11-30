@@ -26,6 +26,13 @@ export type AuthContext = {
   currentUser: CurrentUser | null;
 
   /**
+   * Change the current user's email address.
+   * @param newEmail The new email address
+   * @returns A promise that resolves when the email has been changed
+   */
+  changeEmail: (newEmail: string) => Promise<void>;
+
+  /**
    * Change the current user's password.
    * @param oldPassword The user's current password
    * @param newPassword The user's new password
@@ -85,6 +92,7 @@ export type AuthContext = {
 
 export const AuthContext = createContext<AuthContext>({
   currentUser: null,
+  changeEmail: () => Promise.reject(),
   changePassword: () => Promise.reject(),
   forgotPassword: () => Promise.reject(),
   login: () => Promise.reject(),

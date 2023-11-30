@@ -44,10 +44,10 @@ export const MostPracticedTopics = () => {
 
       <SimpleGrid columns={{ lg: 3 }} gap={12}>
         {topicStats.map(({ name, totalCorrect, totalIncorrect }) => (
-          <Stack align="center">
+          <Stack key={name} align="center">
             <Box w="200px">
               <PieChart
-              questionNum={10}
+                questionNum={10}
                 slices={[
                   {
                     label: "Correct",
