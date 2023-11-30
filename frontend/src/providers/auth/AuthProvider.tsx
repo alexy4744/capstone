@@ -9,13 +9,14 @@ import {
   signInWithEmailAndPassword,
   updatePassword,
   updateProfile,
+  verifyBeforeUpdateEmail,
   verifyPasswordResetCode,
 } from "firebase/auth";
 
 import { AuthContext, CurrentUser } from "./auth-context";
+import { AuthError } from "./auth-error";
 
 import { useFirebase } from "../firebase/firebase-context";
-import { AuthError } from "./auth-error";
 
 type AuthProviderProps = PropsWithChildren<{
   /**
@@ -36,6 +37,16 @@ export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) =
 
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [ready, setReady] = useState(false);
+
+  const changeEmail = async (newEmail: string) => {
+    const { currentUser } = auth;
+
+    if (!currentUser?.email) {
+      throw new Error("User is not signed in.");
+    }
+
+    await verifyBeforeUpdateEmail(currentUser, newEmail);
+  };
 
   const changePassword = async (oldPassword: string, newPassword: string) => {
     const { currentUser } = auth;
@@ -158,6 +169,7 @@ export const AuthProvider = ({ children, loadingFallback }: AuthProviderProps) =
     <AuthContext.Provider
       children={ready ? children : loadingFallback}
       value={{
+        changeEmail,
         changePassword,
         currentUser,
         forgotPassword,

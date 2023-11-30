@@ -5,7 +5,7 @@ import { QuestionCard } from "./QuestionCard";
 
 const PickQuestionsTab = () => {
     const [chosenDifficulty, setChosenDifficulty] = useState<string>();
-    const [chosenTopic, setChosenTopic] = useState<string>("");
+    const [chosenTopic, setChosenTopic] = useState<string[]>([]);
     return (
         <Flex w="100%">
             <Flex width="200px" bg="gray.50" mr="5" borderRadius="lg">
@@ -24,7 +24,7 @@ const PickQuestionsTab = () => {
                             Topics
                         </AbsoluteCenter>
                     </Box>
-                    <TopicSelector chosenTopic={chosenTopic} onClick={setChosenTopic} canDeselect/>
+                    <TopicSelector chosenTopic={chosenTopic} onClickMultiple={setChosenTopic}/>
                 </Container>
             </Flex>
             <Flex flex="1" flexDirection="column">
