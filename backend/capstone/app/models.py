@@ -2,9 +2,25 @@ from django.db import models
 
 
 class Question(models.Model):
+    difficulty_choices = [
+        (1, 'Easy'),
+        (2, 'Medium'),
+        (3, 'Hard')
+    ]
+
+    category_choices = [
+        ('HOA', 'Heart of Algebra'),
+        ('PSD', 'Problem Solving and Data Analysis'),
+        ('PAM', 'Passport to Advanced Math'),
+        ('GEO', 'Geometry'),
+        ('TRI', 'Trigonometry')
+    ]
+    
     title = models.CharField(max_length=5000)
     image = models.ImageField(upload_to='question_images/', null=True, blank=True)
     multiple_choice = models.BooleanField(default=False)
+    difficulty = models.IntegerField(choices=difficulty_choices, default=2)
+    category = models.CharField(max_length=3, choices=category_choices, default='HOA')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
