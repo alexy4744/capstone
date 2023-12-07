@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import *
+from .models import Question, Answer, UserResponse
+from .serializers import QuestionSerializer, AnswerSerializer, UserResponseSerializer
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import *
 from rest_framework.views import APIView
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.response import Response
 
 
@@ -46,8 +47,8 @@ class UserResponseCreateView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         user_response = serializer.validated_data
-        user_response.question = question
-        user_response.is_correct = user_response.submitted_answer == question.correct_answer
+        user_response.question = question_id
+        user_response.is_correct = user_response.submitted_answer == user_response.question
         user_response.save()
 
-    return Response(serializer.datam status=HTTP_201_CREATED)
+        return Response(serializer.data, status=HTTP_201_CREATED)
