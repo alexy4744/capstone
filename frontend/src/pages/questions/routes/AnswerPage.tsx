@@ -50,12 +50,11 @@ const AnswerPage = () => {
                 position="relative"
                 bg="#F5FBFF"
                 px="10"
-                py="2"
-                zIndex="999">
-                <BreadcrumbItem>
+                py="2">
+                <BreadcrumbItem zIndex="9999">
                     <BreadcrumbLink href='#'>SAT</BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbItem>
+                <BreadcrumbItem zIndex="9999">
                     <BreadcrumbLink href='#'>Calculator Allowed</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>

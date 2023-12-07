@@ -10,7 +10,7 @@ type cardTypeDetails = {
     description: string,
 }
 
-const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
+export const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
     const [topic, setTopic] = useState<string>("SELECT");
     const [chosenDifficulty, setChosenDifficulty] = useState<string>("easy");
     const [cardType, setCardType] = useState<cardTypeDetails>();
@@ -20,7 +20,7 @@ const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
             setCardType({
                 type: "Recommended",
                 title: "Recommended For Me",
-                description: "Questions would be picked based on your previous performance to target your weaknesses"
+                description: "Topics would be picked based on your previous performance to target your weaknesses"
             });
         }
         else if (type === "Topic") {
@@ -76,5 +76,3 @@ const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
         </Flex>
     );
 }
-
-export default SuggestionCard;
