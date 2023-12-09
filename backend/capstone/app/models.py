@@ -21,6 +21,7 @@ class Question(models.Model):
     multiple_choice = models.BooleanField(default=False)
     difficulty = models.IntegerField(choices=difficulty_choices, default=2)
     category = models.CharField(max_length=3, choices=category_choices, default='HOA')
+    calculator = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
