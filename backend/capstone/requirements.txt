@@ -1,5 +1,3 @@
-When creating a virtual environment for the python code in the backend these are the following dependencies that are used.
-
 asgiref==3.7.2
 certifi==2023.7.22
 Django==4.2.7
@@ -12,9 +10,3 @@ Pillow==10.1.0
 pymongo==4.6.0
 pytz==2023.3.post1
 sqlparse==0.4.4
-
-use commands:
-pip install ...
-pip3 install ...
-
-to install the libraries into your virtual environment
