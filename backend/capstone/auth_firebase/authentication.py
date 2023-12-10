@@ -1,11 +1,12 @@
-from firebase_admin import auth, credentials
+from firebase_admin import initialize_app, auth, credentials
 from django.contrib.auth.models import User
 from django.utils import timezone
-from rest_framework import authentications, exceptions
-from . exceptions import FirebaseError, InvalidAuthToken, NoAuthToken
+from rest_framework import authentication
+from .exceptions import FirebaseError, InvalidAuthToken, NoAuthToken
 
 cred = credentials.Certificate("creds.json")
-firebase_admin.initialize_app(cred)
+
+initialize_app(cred)
 
 class FirebaseAuthentication(authentication.BaseAuthentication):
   def authenticate(self, request):
