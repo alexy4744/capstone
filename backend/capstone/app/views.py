@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from . models import *
 from . serializers import *
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from auth_firebase.authentication import FirebaseAuthentication
 
@@ -28,34 +30,25 @@ class AnswerDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CreateUserResponse(APIView):
+    authentication_classes = [SessionAuthentication, FirebaseAuthentication]
     permission_classes = [IsAuthenticated]
     
-    def post(self, request):
-        authentication = FirebaseAuthentication()
-        
-        user, _ = authentication.authenticate(request)
-        
-        if user:
-            uid = user.id
-            
-            question_id = request.data.get('question_id')
-            user_input = request.data.get('user_input')
-        
-            question = get_object_or_404(Question, id=question_id)
-            correct_answer = get_object_or_404(Answer, question=question)
-            is_correct = user_input == correct_answer.answer
-        
-            user_response = UserResponse.objects.create(
-                user_id=uid,
-                question=question,
-                submitted_answer=correct_answer if is_correct else None
-            )
-        
-            serializer = UserResponseSerializer(user_response)
-        
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            pass
+    def post(self, request, question_id):
+        user_input = request.data.get('user_input')
+        print(user_input)
+        question = get_object_or_404(Question, id=question_id)
+        correct_answer = get_object_or_404(Answer, question=question)
+        is_correct = user_input == correct_answer.answer
+
+        user_response = UserResponse.objects.create(
+            user_id=request.user.id,
+            question=question,
+            submitted_answer=correct_answer if is_correct else None
+        )
+
+        serializer = UserResponseSerializer(user_response)
+
+        return JsonResponse(serializer.data)
         
         
     
