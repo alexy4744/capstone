@@ -25,6 +25,19 @@ import { Workspace } from "../components/Workspace";
 
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 
+const mapDifficultyLevelToText = (difficulty: number) => {
+  switch (difficulty) {
+    case 1:
+      return "Easy";
+    case 2:
+      return "Medium";
+    case 3:
+      return "Hard";
+    default:
+      throw new RangeError("Difficulty level must be between 1 and 3.");
+  }
+};
+
 const AnswerPage = () => {
   const { id: questionId } = useParams();
 
@@ -76,6 +89,8 @@ const AnswerPage = () => {
     return <DefaultLayout>Loading...</DefaultLayout>;
   }
 
+  const difficulty = mapDifficultyLevelToText(question.difficulty);
+
   return (
     <DefaultLayout backgroundColor="gray.50">
       <Breadcrumb
@@ -104,8 +119,13 @@ const AnswerPage = () => {
 
         {/* Toolbar */}
         <Flex flex="1" flexDirection="column" alignItems="flex-end" py="5">
-          <Badge colorScheme="hard" px="3" fontSize={["sm", "sm", "md", "md"]} zIndex="1">
-            hard
+          <Badge
+            colorScheme={difficulty.toLowerCase()}
+            fontSize={["sm", "sm", "md", "md"]}
+            px="3"
+            zIndex="1"
+          >
+            {difficulty}
           </Badge>
 
           <Box py="5">
