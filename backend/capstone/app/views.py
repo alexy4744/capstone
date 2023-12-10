@@ -1,14 +1,11 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-from .models import Question, Answer, UserResponse
-from .serializers import QuestionSerializer, AnswerSerializer, UserResponseSerializer
+from . models import *
+from . serializers import *
 from rest_framework import generics
-from rest_framework.parsers import MultiPartParser, FormParser
-from .serializers import *
 from rest_framework.views import APIView
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
-from rest_framework.response import Response
-
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from auth_firebase.authentication import FirebaseAuthentication
 
 class QuestionList(generics.ListCreateAPIView):
     queryset = Question.objects.all()
@@ -30,25 +27,35 @@ class AnswerDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AnswerSerializer
 
 
-class UserResponseCreateView(generics.CreateAPIView):
-    queryset = UserResponse.objects.all()
-    serializer_class = UserResponseSerializer
-
-    def create(self, request, *args, **kwargs):
-        question_id = kwargs.get('question_id')
-        try:
-            question_id = Question.objects.get(pk=question_id)
-        except Question.DoesNotExist:
-            return Response({
-                'error': 'Question not found'
-            }, status=HTTP_404_NOT_FOUND)
-
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        user_response = serializer.validated_data
-        user_response.question = question_id
-        user_response.is_correct = user_response.submitted_answer == user_response.question
-        user_response.save()
-
-        return Response(serializer.data, status=HTTP_201_CREATED)
+class CreateUserResponse(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        authentication = FirebaseAuthentication()
+        
+        user, _ = authentication.authenticate(request)
+        
+        if user:
+            uid = user.id
+            
+            question_id = request.data.get('question_id')
+            user_input = request.data.get('user_input')
+        
+            question = get_object_or_404(Question, id=question_id)
+            correct_answer = get_object_or_404(Answer, question=question)
+            is_correct = user_input == correct_answer.answer
+        
+            user_response = UserResponse.objects.create(
+                user_id=uid,
+                question=question,
+                submitted_answer=correct_answer if is_correct else None
+            )
+        
+            serializer = UserResponseSerializer(user_response)
+        
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            pass
+        
+        
+    
