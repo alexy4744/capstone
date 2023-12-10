@@ -106,7 +106,9 @@ const AnswerPage = () => {
         </BreadcrumbItem>
 
         <BreadcrumbItem zIndex="9999">
-          <BreadcrumbLink href="#">Calculator Allowed</BreadcrumbLink>
+          <BreadcrumbLink href="#">
+            {question.calculator ? "Calculator Allowed" : "No Calculator Allowed"}
+          </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
 
