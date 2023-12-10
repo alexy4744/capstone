@@ -12,10 +12,9 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-    SimpleGrid
 } from "@chakra-ui/react";
 import { TfiArrowCircleDown } from "react-icons/tfi";
-import { TopicSelector } from "./CategorySelector";
+import { CategorySelector } from "./CategorySelector";
 
 type TopicModalProps = {
     type: string,
@@ -49,18 +48,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                     <ModalBody>
                         <Container>
                             {type != "Topic" && (
-                                <SimpleGrid spacing="20px">
-                                    <Button onClick={() => {
-                                        handleClose("Calculator Allowed");
-                                    }}>
-                                        Calculator Allowed
-                                    </Button>
-                                    <Button onClick={() => {
-                                        handleClose("Calculator Not Allowed");
-                                    }}>
-                                        Calculator Not Allowed
-                                    </Button>
-                                </SimpleGrid>
+                                <CategorySelector category="section" onClick={handleClose} />
                             )}
                             {type === "Difficulty" && (
                                 <Box position='relative' padding='10'>
@@ -71,7 +59,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                                 </Box>
                             )}
                             {(type === "Difficulty" || type === "Topic") && (
-                                <TopicSelector onClick={handleClose} />
+                                <CategorySelector category="topic" onClick={handleClose} />
                             )}
                         </Container>
                     </ModalBody>
