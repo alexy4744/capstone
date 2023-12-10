@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from os import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,9 +88,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'nextstep',
-        'USER': 'avnadmin',
+        'USER': 'nextstep',
+        'PASSWORD': environ.get('DB_PASSWORD', ''),
         'HOST': 'nextstep-mysql-nextstep.a.aivencloud.com',
-        'PORT': '15327',
+        'PORT': '15327'
     }
 }
 
