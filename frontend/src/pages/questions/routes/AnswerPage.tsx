@@ -137,6 +137,7 @@ const AnswerPage = () => {
 
           <Box>
             <Text pb="2">Tools:</Text>
+
             <DrawingToolbar
               {...{ drawingOn, eraserOn, selectedColor, handleDrawing, handleSwitchPenTool }}
             />
@@ -145,9 +146,11 @@ const AnswerPage = () => {
               <ReferenceTool {...{ referenceOn, handleReferenceToolClick }} />
             </Box>
 
-            <Box py="5">
-              <CalculatorTool {...{ calculatorOn, handleCalculatorToolClick }} />
-            </Box>
+            {question.calculator && (
+              <Box py="5">
+                <CalculatorTool {...{ calculatorOn, handleCalculatorToolClick }} />
+              </Box>
+            )}
           </Box>
         </Flex>
 
