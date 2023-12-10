@@ -21,7 +21,7 @@ export type Question = {
 export type SubmittedAnswer = {
   created_at: string;
   question: number;
-  submitted_answer: number;
+  submitted_answer?: number;
   user_id: string;
 };
 
