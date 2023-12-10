@@ -25,24 +25,7 @@ export type SubmittedAnswer = {
   user_id: string;
 };
 
-export const answerMultipleChoiceQuestion = async (
-  questionId: number,
-  answerId: number
-): Promise<SubmittedAnswer> => {
-  const response = await callApi(`/api/submit-response/${questionId}/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      user_input: answerId,
-    }),
-  });
-
-  return response.json();
-};
-
-export const answerShortResponseQuestion = async (
+export const answerQuestion = async (
   questionId: number,
   answer: string
 ): Promise<SubmittedAnswer> => {
