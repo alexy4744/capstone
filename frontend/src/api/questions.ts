@@ -26,7 +26,7 @@ export type SubmittedAnswer = {
 };
 
 export const answerQuestion = async (
-  questionId: number,
+  questionId: string | number,
   answer: string
 ): Promise<SubmittedAnswer> => {
   const response = await callApi(`/api/submit-response/${questionId}/`, {
@@ -42,7 +42,7 @@ export const answerQuestion = async (
   return response.json();
 };
 
-export const getQuestion = async (questionId: number): Promise<Question> => {
+export const getQuestion = async (questionId: string | number): Promise<Question> => {
   const response = await callApi(`/api/questions/${questionId}`);
 
   return response.json();

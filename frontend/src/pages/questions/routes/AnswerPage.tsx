@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import {
   Badge,
@@ -8,9 +9,12 @@ import {
   Box,
   Flex,
   Text,
+  Image,
 } from "@chakra-ui/react";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
+
+import { getQuestion, Question } from "../../../api/questions";
 
 import { CalculatorTool } from "../components/CalculatorTool";
 import { DrawerStatus, ToolDrawer } from "../components/ToolDrawer";
@@ -22,7 +26,9 @@ import { Workspace } from "../components/Workspace";
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 
 const AnswerPage = () => {
-  // const param = useParams();
+  const { id: questionId } = useParams();
+
+  const [question, setQuestion] = useState<Question | null>(null);
 
   const [calculatorOn, setCalculatorOn] = useState<boolean>(false);
   const [drawerStatus, setDrawerStatus] = useState<DrawerStatus>("stop");
@@ -58,6 +64,18 @@ const AnswerPage = () => {
     setReferenceOn(!referenceOn);
   };
 
+  useEffect(() => {
+    if (!questionId) {
+      throw new Error("Missing question ID from URL.");
+    }
+
+    getQuestion(questionId).then(setQuestion);
+  }, [questionId]);
+
+  if (!question) {
+    return <DefaultLayout>Loading...</DefaultLayout>;
+  }
+
   return (
     <DefaultLayout backgroundColor="gray.50">
       <Breadcrumb
@@ -79,7 +97,9 @@ const AnswerPage = () => {
 
       <Flex w="100%" px="10" py="5">
         <Workspace {...{ drawingOn, eraserOn, selectedColor }}>
-          <Text>test</Text>
+          <Box>
+            <Image src={question.image} alt={question.title} />
+          </Box>
         </Workspace>
 
         {/* Toolbar */}
