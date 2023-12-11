@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { Box, SimpleGrid, Stack, useDisclosure } from "@chakra-ui/react";
+import { Box, SimpleGrid, Stack, Text, useDisclosure } from "@chakra-ui/react";
 
 import { Settings as SavedSettings, getSettings } from "../../../api/settings";
 
 import { ExamDetails } from "../components/ExamDetails";
-import { MostPracticedTopics } from "../components/MostPracticedTopics";
 import { Preferences } from "../components/Preferences";
 import { UpdateExamDateModal } from "../components/UpdateExamDateModal";
 import { UpdateExamLocationModal } from "../components/UpdateExamLocationModal";
@@ -16,6 +15,7 @@ import { UserProfile } from "../components/UserProfile";
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 
 import { useCurrentUser } from "../../../providers";
+import { DifficultyStats } from "../../home/components/DifficultyStats";
 
 export const Settings = () => {
   const currentUser = useCurrentUser();
@@ -81,7 +81,8 @@ export const Settings = () => {
 
         <SimpleGrid columns={1} gap={6}>
           <Box backgroundColor="white" borderRadius="lg" padding={{ base: 8, md: 12 }}>
-            <MostPracticedTopics />
+            <Text fontWeight="bold" fontSize="xl">Your Current Progress:</Text>
+            <DifficultyStats uniformColor/>
           </Box>
 
           <Box backgroundColor="white" borderRadius="lg" padding={{ base: 8, md: 12 }}>

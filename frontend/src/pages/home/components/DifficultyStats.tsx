@@ -9,82 +9,82 @@ import { PieChart } from "../../../components/PieChart";
 import { easy, normal, hard } from "../../../theme/colors";
 
 const getColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "easy":
-      return easy;
-    case "normal":
-      return normal;
-    case "hard":
-      return hard;
-    default:
-      throw new RangeError("Difficulty level must be between easy, normal or hard.");
-  }
+    switch (difficulty) {
+        case "easy":
+            return easy;
+        case "normal":
+            return normal;
+        case "hard":
+            return hard;
+        default:
+            throw new RangeError("Difficulty level must be between easy, normal or hard.");
+    }
 };
 
-export const DifficultyStats = () => {
-  const [statistics, setStatistics] = useState<UserStatistics | null>(null);
+export const DifficultyStats = ({ uniformColor = false }: { uniformColor?: boolean }) => {
+    const [statistics, setStatistics] = useState<UserStatistics | null>(null);
 
-  useEffect(() => {
-    getUserStatistics().then(setStatistics);
-  }, []);
+    useEffect(() => {
+        getUserStatistics().then(setStatistics);
+    }, []);
 
-  return (
-    <HStack h="full" w="full" justifyContent="space-around" py="2">
-      {statistics ? (
-        Object.keys(statistics).map((difficulty) => {
-          const { totalCorrect, totalIncorrect } = statistics[difficulty as keyof UserStatistics];
+    return (
+        <HStack h="full" w="full" justifyContent="space-around" py="2">
+            {statistics ? (
+                Object.keys(statistics).map((difficulty) => {
+                    const { totalCorrect, totalIncorrect } = statistics[difficulty as keyof UserStatistics];
 
-          const total = totalCorrect + totalIncorrect;
+                    const total = totalCorrect + totalIncorrect;
 
-          const color = getColor(difficulty);
+                    const color = getColor(difficulty);
 
-          return (
-            <Box key={difficulty} w="160px">
-              <Flex w="100%" justifyContent="center" alignItems="flex-end">
-                <Box w="100%">
-                  <PieChart
-                    questionNum={total}
-                    slices={
-                      total > 0
-                        ? [
-                            {
-                              label: "Correct",
-                              percentage: (totalCorrect / total) * 100,
-                              color: color[300],
-                            },
-                            {
-                              label: "Incorrect",
-                              percentage: (totalIncorrect / total) * 100,
-                              color: color[100],
-                            },
-                          ]
-                        : [
-                            {
-                              label: "Not attempted yet",
-                              percentage: 100,
-                              color: color[100],
-                            },
-                          ]
-                    }
-                  />
-                </Box>
+                    return (
+                        <Box key={difficulty} w="160px">
+                            <Flex w="100%" justifyContent="center" alignItems={uniformColor ? "flex-start" : "flex-end"}>
+                                <Box w="100%">
+                                    <PieChart
+                                        questionNum={total}
+                                        slices={
+                                            total > 0
+                                                ? [
+                                                    {
+                                                        label: "Correct",
+                                                        percentage: (totalCorrect / total) * 100,
+                                                        color: uniformColor ? "#e2ab93" : color[300],
+                                                    },
+                                                    {
+                                                        label: "Incorrect",
+                                                        percentage: (totalIncorrect / total) * 100,
+                                                        color: uniformColor ? "#eccbbe" : color[100],
+                                                    },
+                                                ]
+                                                : [
+                                                    {
+                                                        label: "Not attempted yet",
+                                                        percentage: 100,
+                                                        color: uniformColor ? "#eccbbe" : color[100],
+                                                    },
+                                                ]
+                                        }
+                                    />
+                                </Box>
 
-                <Box
-                  display={["none", "none", "block", "block"]}
-                  style={{ rotate: "-20deg" }}
-                  mb="10"
-                >
-                  <Badge fontSize={["sm", "sm", "md", "md"]} mx="2" colorScheme={difficulty}>
-                    {difficulty}
-                  </Badge>
-                </Box>
-              </Flex>
-            </Box>
-          );
-        })
-      ) : (
-        <Spinner />
-      )}
-    </HStack>
-  );
+                                <Box
+                                    display={["none", "none", "block", "block"]}
+                                    style={{ rotate: uniformColor ? "20deg" : "-20deg" }}
+                                    mb="10"
+                                >
+                                    <Badge fontSize={["sm", "sm", "md", "md"]} mx="2" colorScheme={difficulty}>
+                                        {difficulty}
+                                    </Badge>
+                                </Box>
+                            </Flex>
+                        </Box>
+                    );
+                })
+            ) : (
+                <Spinner />
+            )}
+        </HStack>
+    );
 };

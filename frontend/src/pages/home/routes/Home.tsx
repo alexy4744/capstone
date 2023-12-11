@@ -97,7 +97,6 @@ const HomePage = () => {
           <TabList justifyContent="space-around">
             <Tab>Recommended</Tab>
             <Tab>Pick Questions</Tab>
-            <Tab>Discussion</Tab>
           </TabList>
 
           <TabPanels>
@@ -111,10 +110,6 @@ const HomePage = () => {
 
             <TabPanel>
               <PickQuestionsTab />
-            </TabPanel>
-
-            <TabPanel>
-              <p>three!</p>
             </TabPanel>
           </TabPanels>
         </Tabs>
