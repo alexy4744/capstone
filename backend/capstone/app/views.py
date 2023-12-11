@@ -74,7 +74,10 @@ class GetUserStats(APIView):
         for response in user_responses:
             difficulty = response.submitted_answer.question.difficulty
             if difficulty not in grouped_responses:
-                grouped_responses[difficulty] = []
-            grouped_responses[difficulty].append(response.id)
+                grouped_responses[difficulty] = {'answers': [], 'none': []}
+            if response.submitted_answer.answer is not None:
+                grouped_responses[difficulty]['answers'].append(response.id)
+            else:
+                grouped_responses[difficulty]['none'].append(response.id)
         return grouped_responses
     
