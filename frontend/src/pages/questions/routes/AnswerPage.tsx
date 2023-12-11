@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import {
@@ -15,6 +15,7 @@ import {
     HStack,
     Input,
     Spinner,
+    useDisclosure,
 } from "@chakra-ui/react";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -32,6 +33,7 @@ import { Workspace } from "../components/Workspace";
 
 import { DefaultLayout } from "../../../layout/DefaultLayout";
 import { TopicDictionary } from "../../../components/CategorySelector";
+import { FeedbackModal } from "../components/FeedbackModal";
 
 const mapDifficultyLevelToText = (difficulty: number) => {
     switch (difficulty) {
@@ -49,7 +51,9 @@ const mapDifficultyLevelToText = (difficulty: number) => {
 const AnswerPage = () => {
     const [queryParameters] = useSearchParams();
     const [question, setQuestion] = useState<Question | null | undefined>(null);
+    const [correct, setCorrect] = useState<boolean | null>(null);
     const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [calculatorOn, setCalculatorOn] = useState<boolean>(false);
     const [drawerStatus, setDrawerStatus] = useState<DrawerStatus>("stop");
@@ -80,10 +84,14 @@ const AnswerPage = () => {
         setReferenceOn(!referenceOn);
     };
 
-    useEffect(() => {
+    const getNewQuestion = useCallback((isContinue: boolean = false) => {
         const id = queryParameters.get("id");
         if (id && !isNaN(id)) {
-            getQuestion(id).then((question) => setQuestion(question));
+            if (isContinue) {
+                getQuestions().then((questions) => setQuestion(questions[Math.floor(Math.random() * questions.length)]));
+            } else {
+                getQuestion(id).then((question) => setQuestion(question));
+            }
         } else {
             const calculator = queryParameters.get("calculator");
             const difficulty = queryParameters.get("difficulty");
@@ -107,6 +115,10 @@ const AnswerPage = () => {
             }
         }
     }, [queryParameters]);
+
+    useEffect(() => {
+        getNewQuestion();
+    }, [getNewQuestion]);
 
     if (question === null) {
         return (
@@ -146,12 +158,8 @@ const AnswerPage = () => {
         }
 
         const submission = await answerQuestion(question.id, answer);
-
-        if (!submission.submitted_answer) {
-            return alert("Incorrect answer. Please try again.");
-        }
-
-        alert("Correct answer!");
+        setCorrect(!submission.submitted_answer ? false : true);
+        onOpen();
     };
 
     return (
@@ -170,14 +178,14 @@ const AnswerPage = () => {
                 <BreadcrumbItem zIndex="9999">
                     <BreadcrumbLink href="#">{question && !question.calculator && "No "}Calculator Allowed</BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbItem zIndex="9999">
+                <BreadcrumbItem>
                     <BreadcrumbLink href="#">{question && question.category && TopicDictionary[question.category]}</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
             <Flex w="100%" px="10" py="5">
                 <Workspace {...{ drawingOn, eraserOn, selectedColor }}>
                     <Box>
-                        <Image src={question.image} alt={question.title} maxHeight="100vh"/>
+                        <Image src={question.image} alt={question.title} maxHeight="100vh" />
 
                         <form onSubmit={handleAnswerSubmission} style={{ display: "flex" }}>
                             <HStack bgColor="white" position="relative" zIndex={9999}>
@@ -203,6 +211,9 @@ const AnswerPage = () => {
                         </form>
                     </Box>
                 </Workspace>
+                {correct !== null && (
+                    <FeedbackModal isOpen={isOpen} onClose={onClose} correct={correct} onNextQuestion={() => { getNewQuestion(true); onClose() }} />
+                )}
 
                 {/* Toolbar */}
                 <Flex flex="1" flexDirection="column" alignItems="flex-end" py="5">
