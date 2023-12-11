@@ -7,4 +7,5 @@ urlpatterns = [
     path('questions/<int:pk>/', QuestionDetail.as_view()),
     path('answers/<int:pk>/', AnswerDetail.as_view()),
     path('submit-response/<int:question_id>/', CreateUserResponse.as_view()),
+    path('home/', GetUserStats.as_view()),
 ]

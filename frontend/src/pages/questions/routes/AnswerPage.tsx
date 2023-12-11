@@ -12,12 +12,16 @@ import {
     Image,
     Button,
     AbsoluteCenter,
+    HStack,
+    Input,
+    Spinner,
 } from "@chakra-ui/react";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaPersonCircleQuestion } from "react-icons/fa6";
 
-import { getQuestion, getQuestions, Question } from "../../../api/questions";
+import { answerQuestion, getQuestion, getQuestions, Question } from "../../../api/questions";
+import { Select } from "chakra-react-select";
 
 import { CalculatorTool } from "../components/CalculatorTool";
 import { DrawerStatus, ToolDrawer } from "../components/ToolDrawer";
@@ -105,11 +109,11 @@ const AnswerPage = () => {
     }, [queryParameters]);
 
     if (question === null) {
-        return (<DefaultLayout>
-            <Flex justifyContent="center" alignSelf="center">
-                Loading...
-            </Flex>
-        </DefaultLayout>);
+        return (
+            <DefaultLayout>
+                <Spinner position="absolute" top="50%" left="50%" />
+            </DefaultLayout>
+        );
     } else if (question === undefined) {
         return (
             <DefaultLayout>
@@ -125,6 +129,30 @@ const AnswerPage = () => {
     }
 
     const difficulty = mapDifficultyLevelToText(question.difficulty);
+
+    const handleAnswerSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (!question) {
+            throw new Error("Missing question ID from URL.");
+        }
+
+        const form = event.currentTarget;
+
+        const answer = form.answer.value;
+
+        if (!answer) {
+            throw new Error("Answer cannot be empty.");
+        }
+
+        const submission = await answerQuestion(question.id, answer);
+
+        if (!submission.submitted_answer) {
+            return alert("Incorrect answer. Please try again.");
+        }
+
+        alert("Correct answer!");
+    };
 
     return (
         <DefaultLayout backgroundColor="gray.50">
@@ -146,11 +174,33 @@ const AnswerPage = () => {
                     <BreadcrumbLink href="#">{question && question.category && TopicDictionary[question.category]}</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
-
             <Flex w="100%" px="10" py="5">
                 <Workspace {...{ drawingOn, eraserOn, selectedColor }}>
                     <Box>
-                        <Image src={question.image} alt={question.title} />
+                        <Image src={question.image} alt={question.title} maxHeight="100vh"/>
+
+                        <form onSubmit={handleAnswerSubmission} style={{ display: "flex" }}>
+                            <HStack bgColor="white" position="relative" zIndex={9999}>
+                                {question.multiple_choice ? (
+                                    <Select
+                                        options={["A", "B", "C", "D"].map((choice) => ({
+                                            label: choice,
+                                            value: choice.toLowerCase(),
+                                        }))}
+                                        isRequired
+                                        isSearchable={false}
+                                        placeholder="Select an answer"
+                                        name="answer"
+                                    />
+                                ) : (
+                                    <Input type="text" name="answer" />
+                                )}
+
+                                <Box>
+                                    <Input type="submit" value="Submit" />
+                                </Box>
+                            </HStack>
+                        </form>
                     </Box>
                 </Workspace>
 
@@ -172,6 +222,7 @@ const AnswerPage = () => {
 
                     <Box>
                         <Text pb="2">Tools:</Text>
+
                         <DrawingToolbar
                             {...{ drawingOn, eraserOn, selectedColor, handleDrawing, handleSwitchPenTool }}
                         />
@@ -180,7 +231,7 @@ const AnswerPage = () => {
                             <ReferenceTool {...{ referenceOn, handleReferenceToolClick }} />
                         </Box>
 
-                        {question && question.calculator && (
+                        {question.calculator && (
                             <Box py="5">
                                 <CalculatorTool {...{ calculatorOn, handleCalculatorToolClick }} />
                             </Box>
