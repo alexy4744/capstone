@@ -35,7 +35,7 @@ const mapDifficultyLevelToText = (difficulty: number) => {
     case 1:
       return "Easy";
     case 2:
-      return "Medium";
+      return "Normal";
     case 3:
       return "Hard";
     default:
