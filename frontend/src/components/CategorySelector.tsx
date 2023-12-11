@@ -9,14 +9,14 @@ export const TopicDictionary = {
     "PAM": "Passport to Advanced Math",
     "GEO": "Geometry",
     "TRI": "Trigonometry"
- } as const;
- export const SectionList = ["Calculator Allowed", "No Calculator Allowed"] as const;
- export const SectionDictionary = {
+} as const;
+export const SectionList = ["Calculator Allowed", "No Calculator Allowed"] as const;
+export const SectionDictionary = {
     "true": "Calculator Allowed",
     "false": "No Calculator Allowed"
- } as const;
+} as const;
 
- const categoryDictionary = {"difficulty" : DifficultyList, "topic" : TopicList, "section" : SectionList } as const;
+const categoryDictionary = { "difficulty": DifficultyList, "topic": TopicList, "section": SectionList } as const;
 
 type CategorySelectorProps = {
     category: "difficulty" | "topic" | "section";
@@ -24,9 +24,17 @@ type CategorySelectorProps = {
     onClick?: (d: string) => void;
     onClickMultiple?: (t: string[]) => void;
     canDeselect?: boolean;
+    hasRandom?: boolean;
 }
 
-export const CategorySelector = ({ category, chosen, onClick, onClickMultiple, canDeselect = false }: CategorySelectorProps) => {
+export const CategorySelector = ({
+    category,
+    chosen,
+    onClick,
+    onClickMultiple,
+    canDeselect = false,
+    hasRandom = false
+}: CategorySelectorProps) => {
     const handleClick = (c: string) => {
         if (Array.isArray(chosen) && onClickMultiple) {
             if (chosen.includes(c)) {
@@ -49,7 +57,7 @@ export const CategorySelector = ({ category, chosen, onClick, onClickMultiple, c
             return chosen === t ? "badgeSelected" : "badge"
         }
     }
-    const handleColorScheme = (c : string) => {
+    const handleColorScheme = (c: string) => {
         if (category === "difficulty") {
             return c;
         } else if (category === "topic") {
@@ -60,20 +68,21 @@ export const CategorySelector = ({ category, chosen, onClick, onClickMultiple, c
     }
     return (
         <Flex justifyContent="center" flexWrap="wrap">
-            {categoryDictionary[category].map((c) => (
-                <Button
-                    key={c}
-                    variant={handleVariant(c)}
-                    colorScheme={handleColorScheme(c)}
-                    onClick={() => {
-                        handleClick(c);
-                    }}
-                    whiteSpace="normal"
-                    px="3"
-                    m="2">
-                    {c.toLocaleUpperCase()}
-                </Button>
-            ))}
+            {(hasRandom ? [...categoryDictionary[category], "Random"] : categoryDictionary[category])
+                .map((c) => (
+                    <Button
+                        key={c}
+                        variant={handleVariant(c)}
+                        colorScheme={handleColorScheme(c)}
+                        onClick={() => {
+                            handleClick(c);
+                        }}
+                        whiteSpace="normal"
+                        px="3"
+                        m="2">
+                        {c.toLocaleUpperCase()}
+                    </Button>
+                ))}
         </Flex>
     );
 };
