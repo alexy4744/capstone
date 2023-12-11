@@ -21,7 +21,7 @@ export const UserProfile = ({
   return (
     <Stack gap={8}>
       <Stack direction="row" gap={6} align="center">
-        <Avatar size={"lg"} src={"https://bit.ly/dan-abramov"} />
+        <Avatar size={"lg"} name={currentUser.displayName} src="https://bit.ly/broken-link" />
 
         <Stack gap={0}>
           <Text fontSize="2xl" fontWeight="bold" textTransform="capitalize">

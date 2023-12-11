@@ -17,15 +17,6 @@ export const Preferences = () => {
       >
         Timer turns red after 2 minute passes
       </Switch>
-
-      <Switch
-        alignItems="center"
-        display="flex"
-        isChecked={preferences.showCorrectAnswer}
-        onChange={() => updatePreferences({ showCorrectAnswer: !preferences.showCorrectAnswer })}
-      >
-        Show correct answer before proceeding to next question
-      </Switch>
     </Stack>
   );
 };
