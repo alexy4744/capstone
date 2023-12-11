@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 
 import { RequireAuth } from "./guards/RequireAuth";
 import { RequireNoAuth } from "./guards/RequireNoAuth";
@@ -8,7 +8,7 @@ import HomePage from "../pages/home/routes/Home";
 import AnswerPage from "../pages/questions/routes/AnswerPage";
 import { Settings } from "../pages/settings";
 
-export const router = createBrowserRouter(
+export const router = createHashRouter(
   [
     {
       path: "/",
