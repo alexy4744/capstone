@@ -11,6 +11,7 @@ import {
   HStack,
   Image,
   Input,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 
@@ -114,7 +115,11 @@ const AnswerPage = () => {
   }, [questionId]);
 
   if (!question) {
-    return <DefaultLayout>Loading...</DefaultLayout>;
+    return (
+      <DefaultLayout>
+        <Spinner position="absolute" top="50%" left="50%" />
+      </DefaultLayout>
+    );
   }
 
   const difficulty = mapDifficultyLevelToText(question.difficulty);
