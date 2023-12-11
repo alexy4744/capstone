@@ -33,12 +33,21 @@ class AnswerDetail(generics.RetrieveUpdateDestroyAPIView):
 #     authentication_classes = [SessionAuthentication, FirebaseAuthentication]
 #     permission_classes = [IsAuthenticated]
     
+<<<<<<< HEAD
 #     def post(self, request, question_id):
 #         user_input = request.data.get('user_input')
 #         print(user_input)
 #         question = get_object_or_404(Question, id=question_id)
 #         correct_answer = get_object_or_404(Answer, question=question)
 #         is_correct = user_input == correct_answer.answer
+=======
+    def post(self, request, question_id):
+        user_input = request.data.get('user_input')
+
+        question = get_object_or_404(Question, id=question_id)
+        correct_answer = get_object_or_404(Answer, question=question)
+        is_correct = user_input == correct_answer.answer
+>>>>>>> bcf5cc6a7e4af986a00abba27da76166519fd992
 
 #         user_response = UserResponse.objects.create(
 #             user_id=request.user.id,
@@ -75,4 +84,30 @@ class CreateUserResponse(generics.CreateAPIView):
 
         
         
+class GetUserStats(APIView):
+    authentication_classes = [SessionAuthentication, FirebaseAuthentication]
+    permission_classes = [IsAuthenticated]
     
+    def get(self, request, format=None):
+        uid = request.user.id
+        responses_with_answers = UserResponse.objects.filter(user_id=uid, submitted_answer__isnull=False)
+        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer=None)
+        responses_with_answers_by_difficulty = self.group_by_difficulty(responses_with_answers)
+        responses_with_none_by_difficulty = self.group_by_difficulty(responses_with_none)
+        
+        response_data = {
+            'user_id': uid,
+            'correct_responses': responses_with_answers_by_difficulty,
+            'incorrect_responses': responses_with_none_by_difficulty,
+        }
+        
+        return JsonResponse(response_data)
+    
+    def group_by_difficulty(self, user_responses):
+        grouped_responses = {}
+        for response in user_responses:
+            difficulty = response.question.difficulty
+            if difficulty not in grouped_responses:
+                grouped_responses[difficulty] = []
+            grouped_responses[difficulty].append(response.id)
+        return grouped_responses

@@ -29,31 +29,33 @@ export const PieChart = ({ questionNum, slices }: PieChartProps) => {
           ],
         }}
         options={{
-          cutout: questionNum ? "65%" : "50%",
+          cutout: questionNum != null ? "65%" : "50%",
           plugins: {
             legend: {
               position: "bottom",
               labels: {
                 boxWidth: 11,
-              }
+              },
             },
             tooltip: {
-             yAlign: "bottom",
-             padding: 10,
-             callbacks: {
-              label(tooltipItems) {
-                return ` ${tooltipItems.formattedValue} %`;
+              yAlign: "bottom",
+              padding: 10,
+              callbacks: {
+                label(tooltipItems) {
+                  return ` ${tooltipItems.formattedValue} %`;
+                },
               },
-             }
-            }
+            },
           },
         }}
       />
-      {questionNum && (
-          <AbsoluteCenter top="40%" w="50px" textAlign="center" letterSpacing="tighter">
-            <Text fontWeight="bold" fontSize={["lg", "lg", "2xl", "2xl"]}>{questionNum}</Text>
-            <Text fontSize="xs">questions</Text>
-          </AbsoluteCenter>
+      {questionNum != null && (
+        <AbsoluteCenter top="40%" w="60px" textAlign="center" letterSpacing="tighter">
+          <Text fontWeight="bold" fontSize={["lg", "lg", "2xl", "2xl"]}>
+            {questionNum}
+          </Text>
+          <Text fontSize="xs">submissions</Text>
+        </AbsoluteCenter>
       )}
     </Flex>
   );

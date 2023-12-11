@@ -1,79 +1,88 @@
-import { Flex, Button, SimpleGrid } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 
 export const DifficultyList = ["easy", "normal", "hard"] as const;
+export const DifficultyDictionary = { 1: "easy", 2: "normal", 3: "hard" } as const;
+export const TopicList = ["Heart of Algebra", "Problem Solving and Data Analysis", "Passport to Advanced Math", "Geometry", "Trigonometry"] as const;
+export const TopicDictionary = {
+    "HOA": "Heart of Algebra",
+    "PSD": "Problem Solving and Data Analysis",
+    "PAM": "Passport to Advanced Math",
+    "GEO": "Geometry",
+    "TRI": "Trigonometry"
+} as const;
+export const SectionList = ["Calculator Allowed", "No Calculator Allowed"] as const;
+export const SectionDictionary = {
+    "true": "Calculator Allowed",
+    "false": "No Calculator Allowed"
+} as const;
 
-type DifficultySelectorProps = {
-    chosenDifficulty?: string;
-    onClick: (d: string) => void;
-    canDeselect?: boolean;
-}
+const categoryDictionary = { "difficulty": DifficultyList, "topic": TopicList, "section": SectionList } as const;
 
-export const DifficultySelector = ({ chosenDifficulty, onClick, canDeselect = false }: DifficultySelectorProps) => {
-
-    return (
-        <SimpleGrid spacing="4" minChildWidth="50px">
-            {DifficultyList.map((d, i) => (
-                <Button
-                    key={i}
-                    variant={chosenDifficulty === d ? "badgeSelected" : "badge"}
-                    colorScheme={d}
-                    onClick={() => onClick((canDeselect && d === chosenDifficulty) ? "" : d)}
-                    px="3">
-                    {d.toLocaleUpperCase()}
-                </Button>
-            ))}
-        </SimpleGrid>
-    );
-};
-
-type TopicSelectorProps = {
-    chosenTopic?: string | string[];
-    onClick?: (t: string) => void;
+type CategorySelectorProps = {
+    category: "difficulty" | "topic" | "section";
+    chosen?: string | string[];
+    onClick?: (d: string) => void;
     onClickMultiple?: (t: string[]) => void;
     canDeselect?: boolean;
+    hasRandom?: boolean;
 }
 
-export const TopicSelector = ({ chosenTopic, onClick, onClickMultiple, canDeselect = false }: TopicSelectorProps) => {
-    const topicList: string[] = ["random", "algebra", "geometery", "trig", "math", "things", "stuff", "Problem Solving and Data Analysis"];
-    const handleClick = (t: string) => {
-        if (Array.isArray(chosenTopic) && onClickMultiple) {
-            if (chosenTopic.includes(t)) {
-                onClickMultiple(chosenTopic.filter(i => i !== t));
+export const CategorySelector = ({
+    category,
+    chosen,
+    onClick,
+    onClickMultiple,
+    canDeselect = false,
+    hasRandom = false
+}: CategorySelectorProps) => {
+    const handleClick = (c: string) => {
+        if (Array.isArray(chosen) && onClickMultiple) {
+            if (chosen.includes(c)) {
+                onClickMultiple(chosen.filter(i => i !== c));
             } else {
-                onClickMultiple([...chosenTopic, t]);
+                onClickMultiple([...chosen, c]);
             }
         } else if (onClick) {
-            if (canDeselect && t === chosenTopic) {
+            if (canDeselect && c === chosen) {
                 onClick("");
             } else {
-                onClick(t);
+                onClick(c);
             }
         }
     }
     const handleVariant = (t: string) => {
-        if (Array.isArray(chosenTopic)) {
-            return chosenTopic.includes(t) ? "badgeSelected" : "badge";
+        if (Array.isArray(chosen)) {
+            return chosen.includes(t) ? "badgeSelected" : "badge";
         } else {
-            return chosenTopic === t ? "badgeSelected" : "badge"
+            return chosen === t ? "badgeSelected" : "badge"
         }
     }
-
+    const handleColorScheme = (c: string) => {
+        if (category === "difficulty") {
+            return c;
+        } else if (category === "topic") {
+            return "blue";
+        } else {
+            return "gray";
+        }
+    }
     return (
         <Flex justifyContent="center" flexWrap="wrap">
-            {topicList.map((t, i) => (
-                <Button
-                    key={i}
-                    variant={handleVariant(t)}
-                    m="1"
-                    colorScheme="blue"
-                    onClick={() => {
-                        handleClick(t)
-                    }}>
-                    <Flex whiteSpace="normal">
-                        {t.toLocaleUpperCase()}
-                    </Flex>
-                </Button>
-            ))}
+            {(hasRandom ? [...categoryDictionary[category], "Random"] : categoryDictionary[category])
+                .map((c) => (
+                    <Button
+                        key={c}
+                        variant={handleVariant(c)}
+                        colorScheme={handleColorScheme(c)}
+                        onClick={() => {
+                            handleClick(c);
+                        }}
+                        whiteSpace="normal"
+                        px="3"
+                        m="2">
+                        {c.toLocaleUpperCase()}
+                    </Button>
+                ))}
         </Flex>
     );
 };

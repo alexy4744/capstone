@@ -1,26 +1,51 @@
 import { Flex, Button, Box, Container, Heading, Text } from "@chakra-ui/react";
 import TopicModal from "../../../components/TopicModal";
-import { DifficultySelector } from "../../../components/CategorySelector";
+import { CategorySelector } from "../../../components/CategorySelector";
 import { useEffect, useState } from "react";
 import { BsPencilFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { Settings as SavedSettings, getSettings } from "../../../api/settings";
 
 type cardTypeDetails = {
-    type: string,
-    title: string,
-    description: string,
+    type: "Recommended" | "Topic" | "Difficulty";
+    title: string;
+    description: string;
+}
+
+const mapTopicsToAbbreviation = (t: string) => {
+    switch (t.toLowerCase()) {
+        case "heart of algebra":
+            return "hoa";
+        case "hearts of algebra":
+            return "hoa";
+        case "problem solving and data analysis":
+            return "psd";
+        case "passport to advanced math":
+            return "pam";
+        case "geometry":
+            return "geo";
+        case "trigonometry":
+            return "tri";
+    }
 }
 
 export const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
-    const [topic, setTopic] = useState<string>("SELECT");
-    const [chosenDifficulty, setChosenDifficulty] = useState<string>("easy");
+    const [settings, setSettings] = useState<SavedSettings | null>(null);
+
+    const [topic, setTopic] = useState<string>("Random");
+    const [chosenSection, setChosenSection] = useState<string>("Random");
+    const [chosenDifficulty, setChosenDifficulty] = useState<string>(type === "Difficulty" ? "easy" : "");
     const [cardType, setCardType] = useState<cardTypeDetails>();
+    useEffect(() => {
+        getSettings().then(setSettings);
+    }, []);
 
     useEffect(() => {
         if (type === "Recommended") {
             setCardType({
                 type: "Recommended",
                 title: "Recommended For Me",
-                description: "Topics would be picked based on your previous performance to target your weaknesses"
+                description: "Topics would be picked based on your focus topics to target your weaknesses"
             });
         }
         else if (type === "Topic") {
@@ -38,6 +63,27 @@ export const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
         }
     }, [type]);
 
+    const searchParams = () => {
+        let searchParams = "";
+        let abbreviate = mapTopicsToAbbreviation(topic);
+        if (abbreviate !== undefined) {
+            searchParams += `topic=${abbreviate}&`;
+        } else if (type === "Recommended" && settings?.focusTopics && settings?.focusTopics.length > 0) {
+            const randomFocusTopic = settings?.focusTopics[Math.floor(Math.random() * settings.focusTopics.length)];
+            abbreviate = mapTopicsToAbbreviation(randomFocusTopic);
+            if (abbreviate) {
+                searchParams += `topic=${abbreviate}&`;
+            }
+        }
+        if (chosenDifficulty !== "") {
+            searchParams += `difficulty=${chosenDifficulty.toLowerCase()}&`;
+        }
+        if (chosenSection !== "" && chosenSection !== "Random") {
+            searchParams += `calculator=${chosenSection === "Calculator Allowed" ? "true" : "false"}`
+        }
+        return searchParams;
+    }
+
     return (
         <Flex
             flexDirection="column"
@@ -54,11 +100,11 @@ export const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
                     <Heading fontSize="xl" fontWeight="semibold">{cardType?.title}</Heading>
                     <Text px="2">{cardType?.description}</Text>
                     {cardType?.type === "Difficulty" && (
-                        <DifficultySelector chosenDifficulty={chosenDifficulty} onClick={setChosenDifficulty} />
+                        <CategorySelector category="difficulty" chosen={chosenDifficulty} onClick={setChosenDifficulty} />
                     )}
-                    <Text fontWeight="semibold">{cardType?.type === "Recommended" ? "Section" : "For"}</Text>
+                    <Text fontWeight="semibold">For</Text>
                     <Flex justifyContent="center">
-                        <TopicModal type={cardType?.type ? cardType.type : "Difficulty"} topic={topic} onClick={setTopic} />
+                        <TopicModal type={type} topic={type === "Recommended" ? chosenSection : topic} onClick={type === "Recommended" ? setChosenSection : setTopic} />
                     </Flex>
                 </Flex>
             </Container>
@@ -66,7 +112,7 @@ export const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
                 position="relative"
                 pt="5"
                 justifyContent="flex-end">
-                <Button variant="startQuestion" pr="16">
+                <Button as={Link} variant="startQuestion" pr="16" to={`questions?${searchParams()}`}>
                     START →
                     <Box position="absolute" right="-10px">
                         <BsPencilFill size="50" />

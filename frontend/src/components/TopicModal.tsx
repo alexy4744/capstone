@@ -1,9 +1,6 @@
 import {
-    Box,
     Button,
     Container,
-    Divider,
-    AbsoluteCenter,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -12,10 +9,9 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-    SimpleGrid
 } from "@chakra-ui/react";
 import { TfiArrowCircleDown } from "react-icons/tfi";
-import { TopicSelector } from "./CategorySelector";
+import { CategorySelector } from "./CategorySelector";
 
 type TopicModalProps = {
     type: string,
@@ -38,7 +34,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                 colorScheme="gray"
                 whiteSpace="normal"
                 variant="dropDown">
-                {topic.toLocaleUpperCase()}
+                {topic.toUpperCase()}
             </Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -48,30 +44,11 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                     <ModalCloseButton />
                     <ModalBody>
                         <Container>
-                            {type != "Topic" && (
-                                <SimpleGrid spacing="20px">
-                                    <Button onClick={() => {
-                                        handleClose("Calculator Allowed");
-                                    }}>
-                                        Calculator Allowed
-                                    </Button>
-                                    <Button onClick={() => {
-                                        handleClose("Calculator Not Allowed");
-                                    }}>
-                                        Calculator Not Allowed
-                                    </Button>
-                                </SimpleGrid>
-                            )}
-                            {type === "Difficulty" && (
-                                <Box position='relative' padding='10'>
-                                    <Divider />
-                                    <AbsoluteCenter bg='white' px='4'>
-                                        Topics
-                                    </AbsoluteCenter>
-                                </Box>
+                            {type === "Recommended" && (
+                                <CategorySelector category="section" onClick={handleClose} hasRandom/>
                             )}
                             {(type === "Difficulty" || type === "Topic") && (
-                                <TopicSelector onClick={handleClose} />
+                                <CategorySelector category="topic" onClick={handleClose} hasRandom={type !== "Topic"}/>
                             )}
                         </Container>
                     </ModalBody>
