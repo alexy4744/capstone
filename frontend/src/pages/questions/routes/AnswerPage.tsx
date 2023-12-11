@@ -86,7 +86,7 @@ const AnswerPage = () => {
 
     const getNewQuestion = useCallback((isContinue: boolean = false) => {
         const id = queryParameters.get("id");
-        if (id && !isNaN(id)) {
+        if (id && id.match(/^-?\d+$/)) {
             if (isContinue) {
                 getQuestions().then((questions) => setQuestion(questions[Math.floor(Math.random() * questions.length)]));
             } else {
