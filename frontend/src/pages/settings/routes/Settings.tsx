@@ -5,7 +5,6 @@ import { Box, SimpleGrid, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { Settings as SavedSettings, getSettings } from "../../../api/settings";
 
 import { ExamDetails } from "../components/ExamDetails";
-import { MostPracticedTopics } from "../components/MostPracticedTopics";
 import { Preferences } from "../components/Preferences";
 import { UpdateExamDateModal } from "../components/UpdateExamDateModal";
 import { UpdateExamLocationModal } from "../components/UpdateExamLocationModal";
