@@ -12,12 +12,12 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { Link, redirect } from "react-router-dom";
-import { useAuth } from "../providers";
+import { useAuth, useCurrentUser } from "../providers";
 import { TbPencilSearch, TbOvalVertical } from "react-icons/tb";
 import Logo from "../assets/navLogo.png";
 
 const Navbar = () => {
-  // const { isOpen, onOpen, onClose } = useDisclosure()
+    const currentUser = useCurrentUser();
 
   const { logout } = useAuth();
 
@@ -61,7 +61,7 @@ const Navbar = () => {
           </Tooltip>
           <Menu>
             <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
-              <Avatar size={"md"} src={"https://bit.ly/dan-abramov"} />
+              <Avatar size={"md"} name={currentUser.displayName} src="https://bit.ly/broken-link" />
             </MenuButton>
             <MenuList>
               <MenuItem as={Link} to="/settings">
