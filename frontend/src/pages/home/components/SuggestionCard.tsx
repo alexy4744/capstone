@@ -1,6 +1,6 @@
 import { Flex, Button, Box, Container, Heading, Text } from "@chakra-ui/react";
 import TopicModal from "../../../components/TopicModal";
-import { DifficultySelector } from "../../../components/CategorySelector";
+import { CategorySelector } from "../../../components/CategorySelector";
 import { useEffect, useState } from "react";
 import { BsPencilFill } from "react-icons/bs";
 
@@ -54,7 +54,7 @@ export const SuggestionCard = ({ type = "Difficulty" }: { type: string }) => {
                     <Heading fontSize="xl" fontWeight="semibold">{cardType?.title}</Heading>
                     <Text px="2">{cardType?.description}</Text>
                     {cardType?.type === "Difficulty" && (
-                        <DifficultySelector chosenDifficulty={chosenDifficulty} onClick={setChosenDifficulty} />
+                        <CategorySelector category="difficulty" chosen={chosenDifficulty} onClick={setChosenDifficulty} />
                     )}
                     <Text fontWeight="semibold">{cardType?.type === "Recommended" ? "Section" : "For"}</Text>
                     <Flex justifyContent="center">
