@@ -50,11 +50,11 @@ export const PieChart = ({ questionNum, slices }: PieChartProps) => {
         }}
       />
       {questionNum != null && (
-        <AbsoluteCenter top="40%" w="50px" textAlign="center" letterSpacing="tighter">
+        <AbsoluteCenter top="40%" w="60px" textAlign="center" letterSpacing="tighter">
           <Text fontWeight="bold" fontSize={["lg", "lg", "2xl", "2xl"]}>
             {questionNum}
           </Text>
-          <Text fontSize="xs">questions</Text>
+          <Text fontSize="xs">submissions</Text>
         </AbsoluteCenter>
       )}
     </Flex>
