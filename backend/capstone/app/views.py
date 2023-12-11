@@ -56,28 +56,21 @@ class GetUserStats(APIView):
     
     def get(self, request, format=None):
         uid = request.user.id
-        responses_with_answers = UserResponse.objects.filter(user_id=uid, submitted_answer__answer__isnull=False)
-        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer__answer__isnull=True))
-        responses_with_answers_by_difficulty = self.group_by_difficulty(responses_with_answers)
-        responses_with_none_by_difficulty = self.group_by_difficulty(responses_with_none)
+        responses_with_answers = UserResponse.objects.filter(user_id=uid, submitted_answer__isnull=False)
+        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer__isnull=True))
+        
+        responses_with_answers_by_difficulty = {
+            entry['submitted_answer__question__difficulty']: entry['count'] for entry in responses_with_answers
+        }
+        
+        responses_with_none_by_difficulty = {
+            entry['question__difficulty']: entry['count'] for entry in responses_with_none
+        }
         
         response_data = {
             'user_id': uid,
-            'correct_responses': responses_with_answers_by_difficulty,
-            'incorrect_responses': responses_with_none_by_difficulty,
+            'responses_with_answers_by_difficulty': responses_with_answers_by_difficulty,
+            'responses_with_none_by_difficulty': responses_with_none_by_difficulty,
         }
         
         return JsonResponse(response_data)
-    
-    def group_by_difficulty(self, user_responses):
-        grouped_responses = {}
-        for response in user_responses:
-            difficulty = response.submitted_answer.question.difficulty
-            if difficulty not in grouped_responses:
-                grouped_responses[difficulty] = {'answers': [], 'none': []}
-            if response.submitted_answer is not None:
-                grouped_responses[difficulty]['answers'].append(response.id)
-            else:
-                grouped_responses[difficulty]['none'].append(response.id)
-        return grouped_responses
-    
