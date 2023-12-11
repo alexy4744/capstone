@@ -35,7 +35,7 @@ class CreateUserResponse(APIView):
     
     def post(self, request, question_id):
         user_input = request.data.get('user_input')
-        print(user_input)
+
         question = get_object_or_404(Question, id=question_id)
         correct_answer = get_object_or_404(Answer, question=question)
         is_correct = user_input == correct_answer.answer
@@ -49,15 +49,16 @@ class CreateUserResponse(APIView):
         serializer = UserResponseSerializer(user_response)
 
         return JsonResponse(serializer.data)
-    
+        
+        
 class GetUserStats(APIView):
     authentication_classes = [SessionAuthentication, FirebaseAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self, request, format=None):
         uid = request.user.id
-        responses_with_answers = UserResponse.objects.filter(user_id=uid, submitted_answer__answer__isnull=False)
-        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer=None))
+        responses_with_answers = UserResponse.objects.filter(user_id=uid, submitted_answer__isnull=False)
+        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer=None)
         responses_with_answers_by_difficulty = self.group_by_difficulty(responses_with_answers)
         responses_with_none_by_difficulty = self.group_by_difficulty(responses_with_none)
         
@@ -72,12 +73,8 @@ class GetUserStats(APIView):
     def group_by_difficulty(self, user_responses):
         grouped_responses = {}
         for response in user_responses:
-            difficulty = response.submitted_answer.question.difficulty
+            difficulty = response.question.difficulty
             if difficulty not in grouped_responses:
-                grouped_responses[difficulty] = {'answers': [], 'none': []}
-            if response.submitted_answer.answer is not None:
-                grouped_responses[difficulty]['answers'].append(response.id)
-            else:
-                grouped_responses[difficulty]['none'].append(response.id)
+                grouped_responses[difficulty] = []
+            grouped_responses[difficulty].append(response.id)
         return grouped_responses
-    

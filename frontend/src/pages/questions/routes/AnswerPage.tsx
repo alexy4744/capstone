@@ -101,10 +101,11 @@ const AnswerPage = () => {
             } else {
                 getQuestions().then((allQuestions) => {
                     const filteredList = allQuestions
-                        .filter((q) =>
-                            (calculator ? `${q.calculator}` === calculator : true)
-                            && (difficulty ? mapDifficultyLevelToText(q.difficulty) === difficulty : true)
-                            && (topic ? q.category === topic.toUpperCase() : true));
+                        .filter(
+                            (q) =>
+                                (calculator ? `${q.calculator}` === calculator : true) &&
+                                (difficulty ? mapDifficultyLevelToText(q.difficulty) === difficulty : true) &&
+                                (topic ? q.category === topic.toUpperCase() : true));
                     if (filteredList.length === 0) {
                         setQuestion(undefined);
                     } else {
@@ -161,7 +162,6 @@ const AnswerPage = () => {
         setCorrect(!submission.submitted_answer ? false : true);
         onOpen();
     };
-
     return (
         <DefaultLayout backgroundColor="gray.50">
             <Breadcrumb
@@ -176,19 +176,23 @@ const AnswerPage = () => {
                     <BreadcrumbLink href="#">SAT</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbItem zIndex="9999">
-                    <BreadcrumbLink href="#">{question && !question.calculator && "No "}Calculator Allowed</BreadcrumbLink>
+                    <BreadcrumbLink href="#">
+                        {question && !question.calculator && "No "}Calculator Allowed
+                    </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbItem>
-                    <BreadcrumbLink href="#">{question && question.category && TopicDictionary[question.category]}</BreadcrumbLink>
+                    <BreadcrumbLink href="#">
+                        {question && question.category && TopicDictionary[question.category]}
+                    </BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
             <Flex w="100%" px="10" py="5">
-                <Workspace {...{ drawingOn, eraserOn, selectedColor }}>
+                <Workspace overflow="auto" {...{ drawingOn, eraserOn, selectedColor }}>
                     <Box>
-                        <Image src={question.image} alt={question.title} maxHeight="100vh" />
+                        <Image src={question.image} alt={question.title} maxW="50vw" maxH="50vh" userSelect="none" />
 
                         <form onSubmit={handleAnswerSubmission} style={{ display: "flex" }}>
-                            <HStack bgColor="white" position="relative" zIndex={9999}>
+                            <HStack bgColor="white" position="relative" zIndex={9999} pt="4" pb="6">
                                 {question.multiple_choice ? (
                                     <Select
                                         options={["A", "B", "C", "D"].map((choice) => ({
@@ -212,11 +216,15 @@ const AnswerPage = () => {
                     </Box>
                 </Workspace>
                 {correct !== null && (
-                    <FeedbackModal isOpen={isOpen} onClose={onClose} correct={correct} onNextQuestion={() => { getNewQuestion(true); onClose() }} />
+                    <FeedbackModal
+                        isOpen={isOpen}
+                        onClose={onClose}
+                        correct={correct}
+                        onNextQuestion={() => { getNewQuestion(true); onClose() }} />
                 )}
 
                 {/* Toolbar */}
-                <Flex flex="1" flexDirection="column" alignItems="flex-end" py="5">
+                <Flex flex="1" flexDirection="column" alignItems="flex-end" py="5" ml="5">
                     <Badge
                         colorScheme={difficulty.toLowerCase()}
                         fontSize={["sm", "sm", "md", "md"]}
@@ -225,7 +233,6 @@ const AnswerPage = () => {
                     >
                         {difficulty}
                     </Badge>
-
                     <Box py="5">
                         <Text textAlign="center">Time Passed:</Text>
                         <Timer />
@@ -233,29 +240,28 @@ const AnswerPage = () => {
 
                     <Box>
                         <Text pb="2">Tools:</Text>
-
                         <DrawingToolbar
                             {...{ drawingOn, eraserOn, selectedColor, handleDrawing, handleSwitchPenTool }}
                         />
-
                         <Box mt="60px" py="5">
                             <ReferenceTool {...{ referenceOn, handleReferenceToolClick }} />
                         </Box>
-
-                        {question.calculator && (
-                            <Box py="5">
-                                <CalculatorTool {...{ calculatorOn, handleCalculatorToolClick }} />
-                            </Box>
-                        )}
-                    </Box>
-                </Flex>
+                        {
+                            question.calculator && (
+                                <Box py="5">
+                                    <CalculatorTool {...{ calculatorOn, handleCalculatorToolClick }} />
+                                </Box>
+                            )
+                        }
+                    </Box >
+                </Flex >
 
                 <ToolDrawer
                     {...{ drawerStatus, calculatorOn, referenceOn }}
                     handleToggle={() => setDrawerStatus(drawerStatus === "active" ? "inactive" : "active")}
                 />
-            </Flex>
-        </DefaultLayout>
+            </Flex >
+        </DefaultLayout >
     );
 };
 
