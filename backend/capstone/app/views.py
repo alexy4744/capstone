@@ -57,7 +57,7 @@ class GetUserStats(APIView):
     def get(self, request, format=None):
         uid = request.user.id
         responses_with_answers = UserResponse.objects.filter(user_id=uid, submitted_answer__answer__isnull=False)
-        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer=None))
+        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer__answer__isnull=True))
         responses_with_answers_by_difficulty = self.group_by_difficulty(responses_with_answers)
         responses_with_none_by_difficulty = self.group_by_difficulty(responses_with_none)
         
@@ -75,7 +75,7 @@ class GetUserStats(APIView):
             difficulty = response.submitted_answer.question.difficulty
             if difficulty not in grouped_responses:
                 grouped_responses[difficulty] = {'answers': [], 'none': []}
-            if response.submitted_answer.answer is not None:
+            if response.submitted_answer is not None:
                 grouped_responses[difficulty]['answers'].append(response.id)
             else:
                 grouped_responses[difficulty]['none'].append(response.id)
