@@ -29,26 +29,50 @@ class AnswerDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AnswerSerializer
 
 
-class CreateUserResponse(APIView):
-    authentication_classes = [SessionAuthentication, FirebaseAuthentication]
-    permission_classes = [IsAuthenticated]
+# class CreateUserResponse(APIView):
+#     authentication_classes = [SessionAuthentication, FirebaseAuthentication]
+#     permission_classes = [IsAuthenticated]
     
-    def post(self, request, question_id):
-        user_input = request.data.get('user_input')
-        print(user_input)
-        question = get_object_or_404(Question, id=question_id)
-        correct_answer = get_object_or_404(Answer, question=question)
-        is_correct = user_input == correct_answer.answer
+#     def post(self, request, question_id):
+#         user_input = request.data.get('user_input')
+#         print(user_input)
+#         question = get_object_or_404(Question, id=question_id)
+#         correct_answer = get_object_or_404(Answer, question=question)
+#         is_correct = user_input == correct_answer.answer
 
-        user_response = UserResponse.objects.create(
-            user_id=request.user.id,
-            question=question,
-            submitted_answer=correct_answer if is_correct else None
-        )
+#         user_response = UserResponse.objects.create(
+#             user_id=request.user.id,
+#             question=question,
+#             submitted_answer=correct_answer if is_correct else None
+#         )
 
-        serializer = UserResponseSerializer(user_response)
+#         serializer = UserResponseSerializer(user_response)
 
-        return JsonResponse(serializer.data)
+#         return JsonResponse(serializer.data)
+
+
+
+class CreateUserResponse(generics.CreateAPIView):
+    serializer_class = UserResponseSerializer
+
+    def create(self, request, *args, **kwargs):
+        uid = request.auth['uid']
+        answer_view = AnswerDetail.as_view()
+        answer = answer_view(request)
+
+        selected_answer = Answer.objects.get(id=answer)
+        user_response_data = {
+            'uid': uid,
+            'submitted_answer': selected_answer
+        }
+
+        serializer = UserResponseSerializer(data=user_response_data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
         
         
     
