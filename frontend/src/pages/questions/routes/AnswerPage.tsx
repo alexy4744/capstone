@@ -178,12 +178,12 @@ const AnswerPage = () => {
         </BreadcrumbItem>
       </Breadcrumb>
       <Flex w="100%" px="10" py="5">
-        <Workspace {...{ drawingOn, eraserOn, selectedColor }}>
+        <Workspace overflow="auto" {...{ drawingOn, eraserOn, selectedColor }}>
           <Box>
-            <Image src={question.image} alt={question.title} maxHeight="100vh" />
+            <Image src={question.image} alt={question.title} maxHeight="100vh" userSelect="none" />
 
             <form onSubmit={handleAnswerSubmission} style={{ display: "flex" }}>
-              <HStack bgColor="white" position="relative" zIndex={9999}>
+              <HStack bgColor="white" position="relative" zIndex={9999} pt="4" pb="6">
                 {question.multiple_choice ? (
                   <Select
                     options={["A", "B", "C", "D"].map((choice) => ({
@@ -208,7 +208,7 @@ const AnswerPage = () => {
         </Workspace>
 
         {/* Toolbar */}
-        <Flex flex="1" flexDirection="column" alignItems="flex-end" py="5">
+        <Flex flex="1" flexDirection="column" alignItems="flex-end" py="5" ml="5">
           <Badge
             colorScheme={difficulty.toLowerCase()}
             fontSize={["sm", "sm", "md", "md"]}
