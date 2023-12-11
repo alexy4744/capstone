@@ -52,7 +52,7 @@ const PickQuestionsTab = () => {
                         && chosenDifficulty.includes(DifficultyDictionary[q.difficulty])
                         && chosenTopic.includes(TopicDictionary[q.category]))
                     .map((q, i) => (
-                        <Box key={i} m="1" as={Link} to={`questions/${q.id}`}>
+                        <Box key={i} m="1" as={Link} to={`questions?id=${q.id}`}>
                             <QuestionCard
                                 difficulty={DifficultyDictionary[q.difficulty]}
                                 calculator={q.calculator}
