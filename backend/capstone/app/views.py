@@ -43,7 +43,7 @@ class CreateUserResponse(APIView):
         user_response = UserResponse.objects.create(
             user_id=request.user.id,
             question=question,
-            submitted_answer=correct_answer if is_correct else None
+            submitted_answer=correct_answer if is_correct else "null"
         )
 
         serializer = UserResponseSerializer(user_response)
