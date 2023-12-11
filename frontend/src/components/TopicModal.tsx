@@ -1,9 +1,6 @@
 import {
-    Box,
     Button,
     Container,
-    Divider,
-    AbsoluteCenter,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -37,7 +34,7 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                 colorScheme="gray"
                 whiteSpace="normal"
                 variant="dropDown">
-                {topic.toLocaleUpperCase()}
+                {topic.toUpperCase()}
             </Button>
 
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -47,19 +44,11 @@ const TopicModal = ({ type = "Difficulty", topic, onClick }: TopicModalProps) =>
                     <ModalCloseButton />
                     <ModalBody>
                         <Container>
-                            {type != "Topic" && (
-                                <CategorySelector category="section" onClick={handleClose} />
-                            )}
-                            {type === "Difficulty" && (
-                                <Box position='relative' padding='10'>
-                                    <Divider />
-                                    <AbsoluteCenter bg='white' px='4'>
-                                        Topics
-                                    </AbsoluteCenter>
-                                </Box>
+                            {type === "Recommended" && (
+                                <CategorySelector category="section" onClick={handleClose} hasRandom/>
                             )}
                             {(type === "Difficulty" || type === "Topic") && (
-                                <CategorySelector category="topic" onClick={handleClose} />
+                                <CategorySelector category="topic" onClick={handleClose} hasRandom={type !== "Topic"}/>
                             )}
                         </Container>
                     </ModalBody>

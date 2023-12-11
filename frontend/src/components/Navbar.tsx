@@ -49,7 +49,7 @@ const Navbar = () => {
           >
             <Button
               as={Link}
-              to="/questions/1"
+              to="/questions?id=1"
               variant={"outline"}
               colorScheme={"easy"}
               size={"sm"}
