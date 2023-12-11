@@ -43,7 +43,7 @@ class CreateUserResponse(APIView):
         user_response = UserResponse.objects.create(
             user_id=request.user.id,
             question=question,
-            submitted_answer=correct_answer if is_correct else "null"
+            submitted_answer=correct_answer if is_correct else None
         )
 
         serializer = UserResponseSerializer(user_response)
@@ -57,7 +57,7 @@ class GetUserStats(APIView):
     def get(self, request, format=None):
         uid = request.user.id
         responses_with_answers = UserResponse.objects.filter(user_id=uid, submitted_answer__answer__isnull=False)
-        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer__answer__isnull=True)
+        responses_with_none = UserResponse.objects.filter(user_id=uid, submitted_answer=None))
         responses_with_answers_by_difficulty = self.group_by_difficulty(responses_with_answers)
         responses_with_none_by_difficulty = self.group_by_difficulty(responses_with_none)
         
