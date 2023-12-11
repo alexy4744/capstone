@@ -8,13 +8,18 @@ import {
   BreadcrumbLink,
   Box,
   Flex,
-  Text,
+  HStack,
   Image,
+  Input,
+  Spinner,
+  Text,
 } from "@chakra-ui/react";
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-import { getQuestion, Question } from "../../../api/questions";
+import { Select } from "chakra-react-select";
+
+import { answerQuestion, getQuestion, Question } from "../../../api/questions";
 
 import { CalculatorTool } from "../components/CalculatorTool";
 import { DrawerStatus, ToolDrawer } from "../components/ToolDrawer";
@@ -30,7 +35,7 @@ const mapDifficultyLevelToText = (difficulty: number) => {
     case 1:
       return "Easy";
     case 2:
-      return "Medium";
+      return "Normal";
     case 3:
       return "Hard";
     default:
@@ -77,6 +82,30 @@ const AnswerPage = () => {
     setReferenceOn(!referenceOn);
   };
 
+  const handleAnswerSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!questionId) {
+      throw new Error("Missing question ID from URL.");
+    }
+
+    const form = event.currentTarget;
+
+    const answer = form.answer.value;
+
+    if (!answer) {
+      throw new Error("Answer cannot be empty.");
+    }
+
+    const submission = await answerQuestion(questionId, answer);
+
+    if (!submission.submitted_answer) {
+      return alert("Incorrect answer. Please try again.");
+    }
+
+    alert("Correct answer!");
+  };
+
   useEffect(() => {
     if (!questionId) {
       throw new Error("Missing question ID from URL.");
@@ -86,7 +115,11 @@ const AnswerPage = () => {
   }, [questionId]);
 
   if (!question) {
-    return <DefaultLayout>Loading...</DefaultLayout>;
+    return (
+      <DefaultLayout>
+        <Spinner position="absolute" top="50%" left="50%" />
+      </DefaultLayout>
+    );
   }
 
   const difficulty = mapDifficultyLevelToText(question.difficulty);
@@ -116,6 +149,29 @@ const AnswerPage = () => {
         <Workspace {...{ drawingOn, eraserOn, selectedColor }}>
           <Box>
             <Image src={question.image} alt={question.title} />
+
+            <form onSubmit={handleAnswerSubmission} style={{ display: "flex" }}>
+              <HStack bgColor="white" position="relative" zIndex={9999}>
+                {question.multiple_choice ? (
+                  <Select
+                    options={["A", "B", "C", "D"].map((choice) => ({
+                      label: choice,
+                      value: choice.toLowerCase(),
+                    }))}
+                    isRequired
+                    isSearchable={false}
+                    placeholder="Select an answer"
+                    name="answer"
+                  />
+                ) : (
+                  <Input type="text" name="answer" />
+                )}
+
+                <Box>
+                  <Input type="submit" value="Submit" />
+                </Box>
+              </HStack>
+            </form>
           </Box>
         </Workspace>
 
