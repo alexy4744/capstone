@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Link, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Text, Heading, Link, Stack, useColorModeValue } from "@chakra-ui/react";
 
 import { Link as ReactRouterLink, redirect } from "react-router-dom";
 
@@ -55,6 +55,10 @@ export const Login = () => {
         <Flex justify="center">
           <Link as={ReactRouterLink} color="teal.400" fontWeight={500} to="/forgot-password">
             Forgot password?
+          </Link>
+          <Text mx="3">/</Text>
+          <Link as={ReactRouterLink} color="teal.400" fontWeight={500} to="/register">
+            Register
           </Link>
         </Flex>
       </Stack>
